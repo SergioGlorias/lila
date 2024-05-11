@@ -71,7 +71,7 @@ final class RelayListing(
           .filter(_.tour.spotlight.exists(_.enabled))
           .filterNot(_.display.finished)
           .filter: tr =>
-            tr.display.hasStarted || tr.display.startsAt.exists(_.isBefore(nowInstant.plusMinutes(30)))
+            tr.display.hasStarted || (tr.display.startsAt.exists(_.isBefore(nowInstant.plusMinutes(30))) && !tr.tour.official) || (tr.display.startsAt.exists(_.isBefore(nowInstant.plusMinutes(180))) && tr.tour.official)
         active
 
   val upcoming = cacheApi.unit[List[RelayTour.WithLastRound]]:
