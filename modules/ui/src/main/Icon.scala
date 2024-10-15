@@ -142,3 +142,9 @@ object Icon:
   val AccountCircle: Icon        = "" // e078
   val Logo: Icon                 = "" // e079
   val Switch: Icon               = "" // e07a
+  val Pawn: Icon                 = "" // e07b
+  val Knight: Icon               = "" // e07c
+  val Bishop: Icon               = "" // e07d
+  val Rook: Icon                 = "" // e07e
+  val Queen: Icon                = "" // e07f
+  val King: Icon                 = "" // e080
