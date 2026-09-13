@@ -24,7 +24,7 @@ final class JsonView(
   )(using me: Option[Me], pref: Pref) =
 
     def allowed(selection: Settings => Settings.UserSelection): Boolean =
-      Settings.UserSelection.allows(selection(study.settings), study, me.map(_.userId))
+      Settings.UserSelection.allows(selection(study.settings), study, me)
 
     for
       liked <- me.so(studyRepo.liked(study, _))
@@ -50,6 +50,7 @@ final class JsonView(
         "chapter" -> Json
           .obj(
             "id" -> chapter.id,
+            "name" -> chapter.name,
             "ownerId" -> chapter.ownerId,
             "setup" -> chapter.setup,
             "tags" -> chapter.tagsExport,
@@ -88,7 +89,8 @@ final class JsonView(
         "owner" -> lightUserApi.sync(s.study.ownerId),
         "chapters" -> s.chapters.take(Study.previewNbChapters),
         "topics" -> s.study.topicsOrEmpty,
-        "members" -> s.study.members.members.values.take(Study.previewNbMembers)
+        "members" -> s.study.members.members.values.take(Study.previewNbMembers),
+        "visibility" -> s.study.visibility
       )
       .add("flair", s.study.flair)
 

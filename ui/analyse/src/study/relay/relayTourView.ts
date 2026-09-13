@@ -1,37 +1,32 @@
-import type AnalyseCtrl from '@/ctrl';
-import RelayCtrl, { type RelayTab } from './relayCtrl';
-import * as licon from 'lib/licon';
-import { bind, dataIcon, onInsert, hl, type LooseVNode, copyMeInput, enter } from 'lib/view';
-import { cmnToggleWrap } from 'lib/view/cmn-toggle';
 import type { VNode } from 'snabbdom';
-import { innerHTML, richHTML } from 'lib/richText';
-import type {
-  RelayData,
-  RelayGroup,
-  RelayRound,
-  RelayTourDates,
-  RelayTourInfo,
-  RelayTourPreview,
-} from './interfaces';
-import { view as multiBoardView } from '../multiBoard';
-import { defined, memoize } from 'lib';
-import type StudyCtrl from '../studyCtrl';
-import { text as xhrText } from 'lib/xhr';
-import { teamsView } from './relayTeams';
-import { statsView } from './relayStats';
-import { type RelayViewContext } from '@/view/components';
-import { gamesList } from './relayGames';
-import { renderStreamerMenu } from './relayView';
-import { playersView } from './relayPlayers';
-import { gameLinksListener } from '../studyChapters';
-import { baseUrl } from '@/view/util';
-import { commonDateFormat, timeago } from 'lib/i18n';
+
+import { defined, memoize, onClickAway } from 'lib';
 import { renderChat } from 'lib/chat/renderChat';
 import { displayColumns } from 'lib/device';
+import { commonDateFormat, timeago } from 'lib/i18n';
+import { licon } from 'lib/licon';
+import { pubsub } from 'lib/pubsub';
+import { innerHTML, richHTML } from 'lib/richText';
+import { bind, dataIcon, onInsert, hl, type LooseVNode, copyMeInput } from 'lib/view';
+import { cmnToggleWrap } from 'lib/view/cmn-toggle';
+import { userLink } from 'lib/view/userLink';
 import { verticalResize } from 'lib/view/verticalResize';
 import { watchers } from 'lib/view/watchers';
-import { userLink } from 'lib/view/userLink';
-import { pubsub } from 'lib/pubsub';
+import { text as xhrText } from 'lib/xhr';
+
+import type AnalyseCtrl from '@/ctrl';
+import { type RelayViewContext } from '@/view/components';
+import { baseUrl } from '@/view/util';
+
+import { view as multiBoardView } from '../multiBoard';
+import { gameLinksListener } from '../studyChapters';
+import type StudyCtrl from '../studyCtrl';
+import type { RelayGroup, RelayRound, RelayTourDates, RelayTourInfo, RelayTourPreview } from './interfaces';
+import RelayCtrl, { type RelayTab } from './relayCtrl';
+import { gamesLists } from './relayGames';
+import { playersView } from './relayPlayers';
+import { statsView } from './relayStats';
+import { teamsView } from './relayTeams';
 
 export function renderRelayTour(ctx: RelayViewContext): VNode | undefined {
   const tab = ctx.relay.tab();
@@ -60,7 +55,7 @@ export const tourSide = (ctx: RelayViewContext, kid: LooseVNode) => {
     'aside.relay-tour__side',
     {
       hook: {
-        insert: gameLinksListener(study.chapterSelect),
+        ...onInsert(gameLinksListener(study.chapterSelect)),
         update: v => {
           if (resizeId) return;
           (v.elm as HTMLElement).querySelectorAll<HTMLElement>('.relay-games, .mchat').forEach(el => {
@@ -94,13 +89,13 @@ export const tourSide = (ctx: RelayViewContext, kid: LooseVNode) => {
                   hook: bind('click', relay.showStreamerMenu.toggle, relay.redraw),
                 }),
               hl('button.relay-tour__side__search', {
-                attrs: { 'data-icon': licon.Search },
+                attrs: dataIcon(licon.Search),
                 hook: bind('click', study.search.open.toggle),
               }),
             ]),
           ],
       !ctrl.isEmbed && relay.showStreamerMenu() && renderStreamerMenu(relay),
-      !empty ? gamesList(study, relay) : hl('div.vertical-spacer'),
+      !empty ? gamesLists(study, relay) : hl('div.vertical-spacer'),
       !empty &&
         resizeId &&
         verticalResize({
@@ -149,6 +144,7 @@ export const showInfo = (i: RelayTourInfo, dates?: RelayTourDates) => {
     ['players', i.players, 'activity.sparkles', 'Star players'],
     ['website', i.website, null, null, i18n.broadcast.officialWebsite],
     ['standings', i.standings, null, null, i18n.site.standings],
+    ['regulations', i.regulations, null, null, i18n.broadcast.regulations],
   ]
     .map(
       ([key, value, icon, textAlternative, linkName]) =>
@@ -181,14 +177,6 @@ const showDates = (dates: RelayTourDates) => {
   return rendered[1] ? `${rendered[0]} - ${rendered[1]}` : rendered[0];
 };
 
-const showSource = (data: RelayData) =>
-  data.lcc
-    ? hl('div.relay-tour__source', [
-        'PGN source: ',
-        hl('a', { attrs: { href: 'https://www.livechesscloud.com' } }, 'LiveChessCloud'),
-      ])
-    : undefined;
-
 const overview = (ctx: RelayViewContext) => {
   const tour = ctx.relay.data.tour;
   return [
@@ -198,7 +186,7 @@ const overview = (ctx: RelayViewContext) => {
       hl('div.relay-tour__markup', {
         hook: innerHTML(tour.description, () => tour.description!),
       }),
-    ctx.ctrl.isEmbed || [showSource(ctx.relay.data), share(ctx)],
+    ctx.ctrl.isEmbed || share(ctx),
   ];
 };
 
@@ -215,7 +203,7 @@ const share = (ctx: RelayViewContext) => {
   const link = (text: string, path: string, help?: VNode) =>
     hl('div.form-group', [
       hl('label.form-label', text),
-      copyMeInput(path.startsWith('/') ? `${baseUrl()}${path}` : path),
+      copyMeInput(path.startsWith('/') ? `${baseUrl()}${path}` : path, { inputAttrs: { readonly: true } }),
       help,
     ]);
   const roundName = ctx.relay.round.name;
@@ -240,7 +228,7 @@ const share = (ctx: RelayViewContext) => {
           'To synchronize ongoing games, use ',
           hl(
             'a',
-            { attrs: { href: '/api#tag/broadcasts/get/apistreambroadcastroundbroadcastroundidpgn' } },
+            { attrs: { href: '/api#tag/broadcasts/GET/api/stream/broadcast/round/{broadcastRoundId}.pgn' } },
             'our free streaming API',
           ),
           ' for stupendous speed and efficiency.',
@@ -252,6 +240,12 @@ const share = (ctx: RelayViewContext) => {
             'our full database exports',
           ),
           '.',
+          hl('br'),
+          hl('p.form-help', [
+            'You can remove clocks and evals from the PGN by adding query parameters, for example: ',
+            hl('br'),
+            hl('code', '?clocks=false&comments=false'),
+          ]),
         ]),
         link('This round: ' + roundName, `${ctx.relay.roundPath()}.pgn`),
         link(
@@ -298,7 +292,7 @@ const tourSelect = (ctx: RelayViewContext, group: RelayGroup) => {
         group.tours.find(t => t.id === relay.data.tour.id)?.name || relay.data.tour.name,
       ),
       relay.tourSelectShow() && [
-        hl('label.fullscreen-mask', { on: { click: updateCheckboxAndToggle } }),
+        hl('div.fullscreen-mask', { on: { click: updateCheckboxAndToggle } }),
         hl(
           'nav.mselect__list',
           group.tours.map(tour =>
@@ -309,9 +303,6 @@ const tourSelect = (ctx: RelayViewContext, group: RelayGroup) => {
                   current: tour.id === relay.data.tour.id,
                 },
                 attrs: { href: study.embeddablePath(`/broadcast/-/${tour.id}`) },
-                on: {
-                  keydown: enter(target => target.click()),
-                },
               },
               [tour.name, tourStateIcon(tour, false)],
             ),
@@ -345,11 +336,13 @@ const roundSelect = (relay: RelayCtrl, study: StudyCtrl) => {
     if (checkbox) checkbox.checked = false;
     relay.roundSelectShow(!checkbox);
   };
-  const extractHrefAndNavigate = (target: HTMLElement) => {
-    const href = $(target).find('a').attr('href') ?? $(target).parents('tr').find('a').attr('href');
+  const extractHrefAndNavigate = (e: PointerEvent, round: RelayRound) => {
+    if (e.metaKey) return;
+    const href = study.embeddablePath(relay.roundUrlWithHash(round));
     if (href && href.split('#')[0] !== window.location.pathname) {
       site.redirect(href);
     } else {
+      e.preventDefault();
       updateCheckboxAndToggle();
     }
   };
@@ -375,7 +368,7 @@ const roundSelect = (relay: RelayCtrl, study: StudyCtrl) => {
         ],
       ),
       relay.roundSelectShow() && [
-        hl('label.fullscreen-mask', { on: { click: updateCheckboxAndToggle } }),
+        hl('div.fullscreen-mask', { on: { click: updateCheckboxAndToggle } }),
         hl(
           'div.relay-tour__round-select__list.mselect__list',
           {
@@ -386,53 +379,35 @@ const roundSelect = (relay: RelayCtrl, study: StudyCtrl) => {
                 ?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             }),
           },
-          hl(
-            'table',
+          relay.data.rounds.map((round, i) =>
             hl(
-              'tbody',
-              relay.data.rounds.map((round, i) =>
+              'a.mselect__item',
+              {
+                attrs: { href: study.embeddablePath(relay.roundUrlWithHash(round)) },
+                class: {
+                  'current-round': round.id === study.data.id,
+                  'ongoing-round': !!round.ongoing,
+                },
+                on: {
+                  click: (e: PointerEvent) => extractHrefAndNavigate(e, round),
+                },
+              },
+              [
+                hl('span.name', round.name),
                 hl(
-                  'tr.mselect__item',
-                  {
-                    class: {
-                      ['current-round']: round.id === study.data.id,
-                      ['ongoing-round']: !!round.ongoing,
-                    },
-                    attrs: {
-                      tabindex: 0,
-                    },
-                    on: {
-                      click: e => extractHrefAndNavigate(e.target as HTMLElement),
-                      keydown: enter(extractHrefAndNavigate),
-                    },
-                  },
-                  [
-                    hl(
-                      'td.name',
-                      hl(
-                        'a',
-                        {
-                          attrs: { href: study.embeddablePath(relay.roundUrlWithHash(round)), tabindex: -1 },
-                        },
-                        round.name,
-                      ),
-                    ),
-                    hl(
-                      'td.time',
-                      round.startsAt
-                        ? commonDateFormat(new Date(round.startsAt))
-                        : round.startsAfterPrevious &&
-                            i18n.broadcast.startsAfter(
-                              relay.data.rounds[i - 1] ? relay.data.rounds[i - 1].name : 'the previous round',
-                            ),
-                    ),
-                    hl(
-                      'td.status',
-                      roundStateIcon(round, false) || (!!round.startsAt && timeago(round.startsAt)),
-                    ),
-                  ],
+                  'span.time',
+                  round.startsAt
+                    ? commonDateFormat(new Date(round.startsAt))
+                    : round.startsAfterPrevious &&
+                        i18n.broadcast.startsAfter(
+                          relay.data.rounds[i - 1] ? relay.data.rounds[i - 1].name : 'the previous round',
+                        ),
                 ),
-              ),
+                hl(
+                  'span.status',
+                  roundStateIcon(round, false) || (!!round.startsAt && timeago(round.startsAt)),
+                ),
+              ],
             ),
           ),
         ),
@@ -455,7 +430,6 @@ const games = (ctx: RelayViewContext) => [
           ),
       )
     : multiBoardView(ctx.study.multiBoard, ctx.study),
-  !ctx.ctrl.isEmbed && showSource(ctx.relay.data),
 ];
 
 const teams = (ctx: RelayViewContext) => [
@@ -548,11 +522,13 @@ const makeTabs = (ctrl: AnalyseCtrl) => {
 
   const makeTab = (key: RelayTab, name: string) =>
     hl(
-      `span.relay-tour__tabs--${key}`,
+      `button.relay-tour__tabs--${key}`,
       {
         class: { active: relay.tab() === key },
         attrs: { role: 'tab' },
-        hook: bind('mousedown', () => relay.openTab(key)),
+        on: {
+          click: () => relay.openTab(key),
+        },
       },
       name,
     );
@@ -582,7 +558,7 @@ const roundStateIcon = (round: RelayRound, titleAsText: boolean) =>
         { attrs: { ...dataIcon(licon.DiscBig), title: !titleAsText && i18n.broadcast.ongoing } },
         titleAsText && i18n.broadcast.ongoing,
       )
-    : round.finished &&
+    : round.finishedAt &&
       hl(
         'span.round-state.finished',
         { attrs: { ...dataIcon(licon.Checkmark), title: !titleAsText && i18n.site.finished } },
@@ -609,3 +585,31 @@ const broadcastImageOrStream = (ctx: RelayViewContext) => {
           : undefined,
   );
 };
+
+function renderStreamerMenu(relay: RelayCtrl): VNode {
+  const makeUrl = (id: string) => {
+    const url = new URL(location.href);
+    url.searchParams.set('embed', id);
+    return url.toString();
+  };
+  return hl(
+    'div.streamer-menu-anchor',
+    hl(
+      'div.streamer-menu',
+      {
+        hook: onInsert(
+          onClickAway(() => {
+            relay.showStreamerMenu(false);
+            relay.redraw();
+          }),
+        ),
+      },
+      relay.streams.map(([id, info]) =>
+        hl('a.streamer.text', { attrs: { 'data-icon': licon.Mic, href: makeUrl(id) } }, [
+          info.name,
+          hl('icon', info.lang),
+        ]),
+      ),
+    ),
+  );
+}

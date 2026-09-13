@@ -1,6 +1,7 @@
 import ps from 'node:process';
-import { deepClean, clean } from './clean.ts';
+
 import { build, stopBuild } from './build.ts';
+import { deepClean, clean } from './clean.ts';
 import { startConsole } from './console.ts';
 import { env, errorMark } from './env.ts';
 import { tasksIdle } from './task.ts';
@@ -16,7 +17,6 @@ const args: Record<string, string> = {
   '--no-color': '',
   '--no-time': '',
   '--no-context': '',
-  '--no-corepack': '',
   '--help': 'h',
   '--watch': 'w',
   '--prod': 'p',
@@ -33,21 +33,19 @@ const usage = `Usage:
 
 Options:
   -h, --help          show this help and exit
-  -w, --watch         build and watch for changes
+  -w, --watch         build and watch for changes. press <space> while watching to trigger a clean rebuild
   -c, --clean         clean all build artifacts and build fresh
   -k, --kill          if another ui/build instance is running, kill it rather than bail
   -p, --prod          build minified assets (prod builds)
   -n, --no-install    don't run pnpm install
-  -d, --debug         disable noUnusedLocals, noImplicitReturns, noUnusedParameters in tsc and build
-                      assets with site.debug = true
+  -d, --debug         build assets with site.debug = true
   -l, --log=<url>     patch console logging functions in javascript manifest to POST messages to
                       <url> or localhost:8666 (default). if used with --watch, the watch process
                       will listen for http on 8666 and display received messages in build logs
   --clean-exit        clean all build artifacts and exit
-  --no-color          don't use color in logs
+  --no-color          don't color output
   --no-time           don't log the time
   --no-context        don't log the context
-  --no-corepack       don't use corepack to install pnpm (protect or restricted system node installs)
 
 Exclusive Options:    (any of these will disable other functions)
   --tsc               run tsc on {package}/tsconfig.json and dependencies
@@ -91,7 +89,6 @@ if (['--tsc', '--sass', '--esbuild', '--i18n'].filter(x => argv.includes(x)).len
 
 env.logTime = !boolArg('--no-time');
 env.logCtx = !boolArg('--no-context');
-env.logColor = !boolArg('--no-color');
 env.watch = boolArg('--watch');
 env.prod = boolArg('--prod');
 env.debug = boolArg('--debug');
@@ -130,14 +127,15 @@ if (env.watch && 'setRawMode' in ps.stdin) {
 
 build(argv.filter(x => !x.startsWith('-')));
 
-function getArg(longForm: string) {
+function getArg(longForm: string): string | undefined {
   return argv.find(
     arg => arg.startsWith(longForm) || (args[longForm] && oneDashRe.exec(arg)?.[1]?.includes(args[longForm])),
   );
 }
+
 function stringArg(longForm: string): string | boolean {
   const it = getArg(longForm);
-  return it?.split('=')[1] ?? (it ? true : false);
+  return it?.split('=')[1] ?? !!it;
 }
 
 function boolArg(longForm: string): boolean {

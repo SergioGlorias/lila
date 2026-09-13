@@ -82,8 +82,6 @@ case class Study(
 
   def withoutMembers = copy(members = StudyMembers.empty)
 
-  def light = LightStudy(isPublic, members.contributorIds)
-
   def topicsOrEmpty = topics | StudyTopics.empty
 
   def addTopics(ts: StudyTopics) =
@@ -105,8 +103,6 @@ object Study:
   val previewNbMembers = 4
   val previewNbChapters = 4
 
-  def toName(str: String) = StudyName(lila.common.String.fullCleanUp(str).take(100))
-
   opaque type Likes = Int
   object Likes extends OpaqueInt[Likes]
 
@@ -127,21 +123,6 @@ object Study:
     case Study(id: StudyId)
     case Relay(clonedFrom: Option[StudyId])
 
-  case class Data(
-      name: String,
-      flair: Option[String],
-      visibility: Visibility,
-      computer: Settings.UserSelection,
-      explorer: Settings.UserSelection,
-      cloneable: Settings.UserSelection,
-      shareable: Settings.UserSelection,
-      chat: Settings.UserSelection,
-      sticky: String,
-      description: String
-  ):
-    def settings =
-      Settings(computer, explorer, cloneable, shareable, chat, sticky == "true", description == "true")
-
   case class WithChapter(study: Study, chapter: Chapter)
 
   case class WithChapters(study: Study, chapters: Seq[StudyChapterName])
@@ -151,8 +132,6 @@ object Study:
   case class WithChaptersAndLiked(study: Study, chapters: Seq[StudyChapterName], liked: Boolean)
 
   case class WithLiked(study: Study, liked: Boolean)
-
-  case class LightStudy(isPublic: Boolean, contributors: Set[UserId])
 
   def makeId = StudyId(ThreadLocalRandom.nextString(8))
 
@@ -170,7 +149,7 @@ object Study:
       members = StudyMembers(Map(user.id -> owner)),
       position = Position.Ref(StudyChapterId(""), UciPath.root),
       ownerId = user.id,
-      visibility = Visibility.public,
+      visibility = Visibility.unlisted,
       settings = settings | Settings.init,
       from = from,
       likes = Likes(1),

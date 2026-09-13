@@ -22,6 +22,7 @@
   <string name="teamRead">Чтение информации о закрытых клубах</string>
   <string name="teamWrite">Присоединение к клубам и покидание их</string>
   <string name="teamLead">Управление клубами, где вы лидер: отправка личных сообщений, исключение участников</string>
+  <string name="manageTeamsYouLead" comment="Replaces old string teamLead">Управление клубами, где вы лидер: отправка личных сообщений, исключение участников</string>
   <string name="followRead">Чтение списка подписчиков</string>
   <string name="followWrite">Подписка и отписка от других игроков</string>
   <string name="msgWrite">Отправка личных сообщений другим игрокам</string>
@@ -29,7 +30,6 @@
   <string name="botPlay">Играть партии с API ботов</string>
   <string name="engineRead">Просмотр и использование ваших внешних движков</string>
   <string name="engineWrite">Создание и изменение внешних движков</string>
-  <string name="webLogin">Создание авторизованных сеансов на сайте (предоставляет полный доступ!)</string>
   <string name="webMod">Использование инструментов модератора (в рамках вашего доступа)</string>
   <string name="personalAccessTokens">Персональный токен доступа к API</string>
   <string name="canMakeOauthRequests">Вы можете делать запросы OAuth, не проходя через %s.</string>

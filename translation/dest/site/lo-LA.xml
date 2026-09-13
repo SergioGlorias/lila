@@ -122,7 +122,6 @@
   <string name="enable">ເປີດໃຊ້</string>
   <string name="bestMoveArrow">ລູກສອນແນະນຳທ່າທີ່ດີທີ່ສຸດ</string>
   <string name="showVariationArrows">ສະແດງລູກສອນຮູບແບບການເດີນ</string>
-  <string name="evaluationGauge">ແຖບວັດແທກການໄດ້ປຽບ</string>
   <string name="multipleLines">ຫຼາຍເສັ້ນທາງວິເຄາະ</string>
   <string name="cpus">ຊີພີຢູ (CPUs)</string>
   <string name="memory">ໜ່ວຍຄວາມຈຳ</string>
@@ -215,7 +214,6 @@
   <string name="changeUsernameNotSame">ສາມາດປ່ຽນໄດ້ສະເພາະຕົວພິມໃຫຍ່ ຫຼື ຕົວພິມນ້ອຍເທົ່ານັ້ນ. ຕົວຢ່າງ: ຈາກ \"johndoe\" ເປັນ \"JohnDoe\".</string>
   <string name="changeUsernameDescription">ປ່ຽນຊື່ຜູ້ໃຊ້ຂອງທ່ານ. ສາມາດເຮັດໄດ້ພຽງຄັ້ງດຽວ ແລະ ອະນຸຍາດໃຫ້ປ່ຽນໄດ້ສະເພາະຕົວພິມໃຫຍ່ ຫຼື ຕົວພິມນ້ອຍໃນຊື່ຜູ້ໃຊ້ຂອງທ່ານເທົ່ານັ້ນ.</string>
   <string name="signupUsernameHint">ກະລຸນາເລືອກຊື່ຜູ້ໃຊ້ທີ່ເໝາະສົມກັບທຸກເພດທຸກໄວ. ທ່ານບໍ່ສາມາດປ່ຽນໄດ້ໃນພາຍຫຼັງ ແລະ ບັນຊີໃດທີ່ມີຊື່ຜູ້ໃຊ້ບໍ່ເໝາະສົມຈະຖືກປິດ!</string>
-  <string name="signupEmailHint">ພວກເຮົາຈະໃຊ້ມັນເພື່ອຕັ້ງລະຫັດຜ່ານໃໝ່ ແລະ ເປີດໃຊ້ບັນຊີເທົ່ານັ້ນ.</string>
   <string name="password">ລະຫັດຜ່ານ</string>
   <string name="changePassword">ປ່ຽນລະຫັດຜ່ານ</string>
   <string name="changeEmail">ປ່ຽນອີເມວ</string>
@@ -239,9 +237,6 @@
   <string name="emailCanTakeSomeTime">ມັນອາດຈະໃຊ້ເວລາຄາວໜຶ່ງເພື່ອສົ່ງໄປເຖິງ.</string>
   <string name="refreshInboxAfterFiveMinutes">ກະລຸນາລໍຖ້າ 5 ນາທີ ແລ້ວຣີເຟຣຊ (Refresh) ກ່ອງຂໍ້ຄວາມອີເມວຂອງທ່ານ.</string>
   <string name="checkSpamFolder">ກະລຸນາກວດເບິ່ງໃນກ່ອງຈົດໝາຍຂີ້ເຫຍື້ອ (Spam) ນຳ, ມັນອາດຈະໄປຢູ່ຫັ້ນ. ຖ້າມີ, ໃຫ້ໝາຍວ່າມັນບໍ່ແມ່ນຈົດໝາຍຂີ້ເຫຍື້ອ.</string>
-  <string name="emailForSignupHelp">ຖ້າວິທີອື່ນບໍ່ໄດ້ຜົນ, ໃຫ້ສົ່ງອີເມວຫາພວກເຮົາ:</string>
-  <string name="copyTextToEmail">ກັອບປີ້ (Copy) ຂໍ້ຄວາມຂ້າງເທິງ ແລ້ວສົ່ງໄປທີ່ %s</string>
-  <string name="waitForSignupHelp">ພວກເຮົາຈະຕິດຕໍ່ກັບທ່ານໃນໄວໆນີ້ເພື່ອຊ່ວຍໃຫ້ການລົງທະບຽນສຳເລັດ.</string>
   <string name="accountConfirmed">ຜູ້ໃຊ້ %s ໄດ້ຖືກຢືນຢັນສຳເລັດແລ້ວ.</string>
   <string name="accountCanLogin">ທ່ານສາມາດເຂົ້າສູ່ລະບົບໄດ້ຕອນນີ້ໃນຊື່ %s.</string>
   <string name="accountConfirmationEmailNotNeeded">ທ່ານບໍ່ຈຳເປັນຕ້ອງໃຊ້ອີເມວຢືນຢັນ.</string>
@@ -390,7 +385,6 @@
   <string name="apply">ນຳໃຊ້</string>
   <string name="save">ບັນທຶກ</string>
   <string name="leaderboard">ຕາຕະລາງຄະແນນນຳ</string>
-  <string name="screenshotCurrentPosition">ຖ່າຍຮູບໜ້າຈໍຕຳແໜ່ງປະຈຸບັນ</string>
   <string name="gameAsGIF">ເກມໃນຮູບແບບ GIF</string>
   <string name="pasteTheFenStringHere">ວາງຂໍ້ຄວາມ FEN ທີ່ນີ້</string>
   <string name="pasteThePgnStringHere">ວາງຂໍ້ຄວາມ PGN ທີ່ນີ້</string>
@@ -495,7 +489,6 @@
   <string name="oneUrlPerLine">ໜຶ່ງ URL ຕໍ່ແຖວ.</string>
   <string name="inlineNotation">ສັນຍະລັກໃນແຖວ</string>
   <string name="makeAStudy">ເພື່ອການເກັບຮັກສາ ແລະ ແບ່ງປັນ, ລອງສ້າງບົດສຶກສາ (Study).</string>
-  <string name="clearSavedMoves">ລຶບການເດີນໝາກ</string>
   <string name="previouslyOnLichessTV">ກ່ອນໜ້ານີ້ໃນ Lichess TV</string>
   <string name="onlinePlayers">ຜູ້ຫຼິ້ນທີ່ອອນລາຍ</string>
   <string name="activePlayers">ຜູ້ຫຼິ້ນທີ່ມີການເຄື່ອນໄຫວ</string>
@@ -672,11 +665,6 @@
   <string name="keyCycleSelectedVariation">ໝູນວຽນຮູບແບບການເດີນທີ່ເລືອກ</string>
   <string name="keyShowOrHideComments">ສະແດງ/ຊ່ອນ ຄຳຄິດເຫັນ</string>
   <string name="keyEnterOrExitVariation">ເຂົ້າ/ອອກ ຈາກຮູບແບບການເດີນ (Variation)</string>
-  <string name="keyRequestComputerAnalysis">ຂໍການວິເຄາະດ້ວຍຄອມພິວເຕີ, ຮຽນຮູ້ຈາກຂໍ້ຜິດພາດຂອງທ່ານ</string>
-  <string name="keyNextLearnFromYourMistakes">ຕໍ່ໄປ (ຮຽນຮູ້ຈາກຂໍ້ຜິດພາດຂອງທ່ານ)</string>
-  <string name="keyNextBlunder">ຂໍ້ຜິດພາດຮ້າຍແຮງ (Blunder) ຖັດໄປ</string>
-  <string name="keyNextMistake">ຂໍ້ຜິດພາດຖັດໄປ</string>
-  <string name="keyNextInaccuracy">ຈຸດທີ່ບໍ່ແມ່ນຍຳ (Inaccuracy) ຖັດໄປ</string>
   <string name="keyPreviousBranch">ສາຂາ (Branch) ກ່ອນໜ້າ</string>
   <string name="keyNextBranch">ສາຂາ (Branch) ຖັດໄປ</string>
   <string name="toggleVariationArrows">ເປີດ/ປິດ ລູກສອນສະແດງຮູບແບບການເດີນ</string>
@@ -760,7 +748,6 @@
   <string name="background">ພື້ນຫຼັງ</string>
   <string name="light">ແຈ້ງ</string>
   <string name="dark">ມືດ</string>
-  <string name="transparent">ໂປ່ງໃສ</string>
   <string name="deviceTheme">ທີມຕາມອຸປະກອນ</string>
   <string name="backgroundImageUrl">URL ຂອງຮູບພື້ນຫຼັງ:</string>
   <string name="board">ກະດານ</string>
@@ -859,7 +846,6 @@
   <string name="agreementAssistance">ຂ້ອຍຕົກລົງວ່າຂ້ອຍຈະບໍ່ຮັບການຊ່ວຍເຫຼືອໃນລະຫວ່າງການຫຼິ້ນ (ຈາກຄອມພິວເຕີ, ປຶ້ມ, ຖານຂໍ້ມູນ ຫຼື ບຸກຄົນອື່ນ).</string>
   <string name="agreementNice">ຂ້ອຍຕົກລົງວ່າຂ້ອຍຈະໃຫ້ກຽດຜູ້ຫຼິ້ນຄົນອື່ນສະເໝີ.</string>
   <string name="agreementMultipleAccounts" comment="%s will be replaced with the translation of 'termsOfService'">ຂ້ອຍຕົກລົງວ່າຂ້ອຍຈະບໍ່ສ້າງຫຼາຍບັນຊີ (ຍົກເວັ້ນເຫດຜົນທີ່ລະບຸໄວ້ໃນ %s).</string>
-  <string name="agreementPolicy">ຂ້ອຍຕົກລົງວ່າຂ້ອຍຈະປະຕິບັດຕາມນະໂຍບາຍທັງໝົດຂອງ Lichess.</string>
   <string name="searchOrStartNewDiscussion">ຄົ້ນຫາ ຫຼື ເລີ່ມການສົນທະນາໃໝ່</string>
   <string name="edit">ແກ້ໄຂ</string>
   <string name="ultraBullet" comment="Probably best left untranslated. Leave it as 'UltraBullet' unless your language has a better word for it.">UltraBullet</string>
@@ -895,7 +881,6 @@
   <string name="xInvitedYouToY">%1$s ໄດ້ເຊີນທ່ານເຂົ້າຮ່ວມ \"%2$s\".</string>
   <string name="youAreNowPartOfTeam">ຕອນນີ້ທ່ານໄດ້ເປັນສ່ວນໜຶ່ງຂອງທີມແລ້ວ.</string>
   <string name="youHaveJoinedTeamX">ທ່ານໄດ້ເຂົ້າຮ່ວມ \"%1$s\" ແລ້ວ.</string>
-  <string name="someoneYouReportedWasBanned">ຄົນທີ່ທ່ານລາຍງານຖືກແແບນແລ້ວ</string>
   <string name="congratsYouWon">ຍິນດີດ້ວຍ, ທ່ານຊະນະແລ້ວ!</string>
   <string name="gameVsX">ເກມພົບກັບ %1$s</string>
   <string name="resVsX">%1$s ພົບກັບ %2$s</string>
@@ -947,7 +932,6 @@
   <string name="gameInProgress">ທ່ານມີເກມທີ່ກຳລັງຫຼິ້ນຄ້າງຢູ່ກັບ %s.</string>
   <string name="abortTheGame">ຍົກເລີກເກມ</string>
   <string name="resignTheGame">ຍອມແພ້</string>
-  <string name="youCantStartNewGame">ທ່ານບໍ່ສາມາດເລີ່ມເກມໃໝ່ໄດ້ຈົນກວ່າເກມນີ້ຈະສິ້ນສຸດ.</string>
   <string name="since">ຕັ້ງແຕ່</string>
   <string name="until">ຈົນເຖິງ</string>
   <string name="lichessDbExplanation">ເກມທີ່ມີການຄິດໄລ່ຄະແນນທີ່ຫຼິ້ນໃນ Lichess</string>

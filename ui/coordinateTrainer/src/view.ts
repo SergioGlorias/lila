@@ -1,6 +1,8 @@
 import type { VNode, VNodeStyle } from 'snabbdom';
-import { bind, hl } from 'lib/view';
 import { renderVoiceBar } from 'voice';
+
+import { bind, hl, onInsert } from 'lib/view';
+
 import chessground from './chessground';
 import CoordinateTrainerCtrl, { DURATION } from './ctrl';
 import type { CoordModifier } from './interfaces';
@@ -101,7 +103,7 @@ const coordinateInput = (ctrl: CoordinateTrainerCtrl): VNode | false => {
     hl('div.keyboard-container', [
       hl('span', [
         hl('input.keyboard', {
-          hook: { insert: vnode => (ctrl.keyboardInput = vnode.elm as HTMLInputElement) },
+          hook: onInsert<HTMLInputElement>(el => (ctrl.keyboardInput = el)),
           on: { keyup: ctrl.onKeyboardInputKeyUp },
         }),
         ctrl.playing ? hl('span', 'Enter the coordinate') : hl('strong', 'Press <enter> to start'),

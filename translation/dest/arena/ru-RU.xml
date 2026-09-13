@@ -20,6 +20,7 @@
   <string name="howIsTheWinnerDecided">Как определяется победитель?</string>
   <string name="howIsTheWinnerDecidedAnswer">Игрок с наибольшим количеством очков в момент окончания времени турнира будет объявлен победителем.</string>
   <string name="howDoesPairingWork">Как проходит жеребьёвка?</string>
+  <string name="howArePlayersPaired" comment="Replaces old string howDoesPairingWork">Как составляются пары?</string>
   <string name="howDoesPairingWorkAnswer">В начале турнира пары образуются согласно рейтингу. По окончании каждой партии игроки возвращаются на страницу турнира, и им предоставляется свободный соперник с близким количеством турнирных очков. Это обеспечивает маленькое время ожидания соперника, однако в результате вы можете встретиться с некоторыми участниками много раз или же не встретиться с кем-то ни разу.
 Играйте быстро и возвращайтесь на страницу турнира, чтобы сыграть больше игр и заработать больше очков.</string>
   <string name="howDoesItEnd">Как завершается турнир?</string>
@@ -71,6 +72,9 @@
   <string name="rankAvgHelp">Среднее занятое место (вхождение в процент лучших игроков). Чем ниже значение, тем лучше.
 
 Например, занятие 3 места в турнире из 100 игроков даёт 3%. Занятие 10 места в турнире из 1000 игроков даёт 1%.</string>
+  <string name="rankAverageHelp" comment="Replaces old string rankAvgHelp">Ваш усреднённый ранг — это ваша средняя финишная позиция в турнирах по отношению к общему количеству игроков в этих турнирах. То есть это мера размещения в турнирах, а не ваш общий рейтинг.
+
+Например, усреднённый ранг 3% означает, что вы обычно финишируете в числе 3% лучших игроков турнира (например 30-е место из 1000 игроков).</string>
   <string name="medians">медианы</string>
   <string name="allAveragesAreX">Средние значения по этой странице: %s.</string>
   <string name="total">Всего</string>
@@ -83,4 +87,5 @@
   <string name="onlyTitledHelp">Требуется официальное звание для участия в турнире</string>
   <string name="tournamentPairingsAreNowClosed">Жеребьёвка турнира закончена</string>
   <string name="berserkRate">Берсерк</string>
+  <string name="leaguesAndStreamerBattles">Лиги &amp; Битвы стримеров</string>
 </resources>

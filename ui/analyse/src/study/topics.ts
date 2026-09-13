@@ -1,7 +1,9 @@
+import { h, type VNode } from 'snabbdom';
+
 import { prop } from 'lib';
 import { bind, bindSubmit, onInsert, snabDialog } from 'lib/view';
 import { json as xhrJson, url as xhrUrl } from 'lib/xhr';
-import { h, type VNode } from 'snabbdom';
+
 import type { Topic } from './interfaces';
 import type StudyCtrl from './studyCtrl';
 
@@ -66,7 +68,7 @@ export const formView = (ctrl: TopicsCtrl, userId?: string): VNode =>
     ],
     onInsert: dlg => {
       dlg.show();
-      (dlg.view.querySelector('.tagify__input') as HTMLElement)?.focus();
+      dlg.view.querySelector<HTMLElement>('.tagify__input')?.focus();
     },
   });
 

@@ -1,14 +1,17 @@
-import { parseUci, makeSquare } from 'chessops/util';
-import { isDrop, type Square } from 'chessops/types';
-import { winningChances } from 'lib/ceval';
-import { opposite } from '@lichess-org/chessground/util';
 import type { DrawModifiers, DrawShape } from '@lichess-org/chessground/draw';
-import { annotationShapes, analysisGlyphs } from 'lib/game/glyphs';
-import type AnalyseCtrl from './ctrl';
-import { isUci } from 'lib/game/chess';
-import { parseFen } from 'chessops/fen';
-import type { ServerEval } from 'lib/tree/types';
+import { opposite } from '@lichess-org/chessground/util';
 import { between, ray, knightAttacks } from 'chessops/attacks';
+import { parseFen } from 'chessops/fen';
+import { isDrop, type Square } from 'chessops/types';
+import { parseUci, makeSquare } from 'chessops/util';
+
+import { winningChances } from 'lib/ceval';
+import { fenColor } from 'lib/game';
+import { isUci } from 'lib/game/chess';
+import { annotationShapes, analysisGlyphs } from 'lib/game/glyphs';
+import type { ServerEval, TreeNode } from 'lib/tree/types';
+
+import type AnalyseCtrl from './ctrl';
 
 const pieceDrop = (key: Key, role: Role, color: Color): DrawShape => ({
   orig: key,
@@ -49,7 +52,7 @@ function interferingArrow(from: Square, to: Square, occupied: Uint8Array): boole
 }
 
 function drawManeuver(ctrl: AnalyseCtrl, color: Color, moves: Uci[], brush: string, shapes: DrawShape[]) {
-  if (ctrl.showManeuverMoveArrowsProp()) {
+  if (ctrl.settings.showManeuverMoveArrows) {
     const maxPairs = Math.min(moves.length, MAX_MANEUVER_ARROWS * 2);
     const occupied = new Uint8Array(64);
 
@@ -75,11 +78,11 @@ function drawManeuver(ctrl: AnalyseCtrl, color: Color, moves: Uci[], brush: stri
 
 export function makeShapesFromUci(
   color: Color,
-  uci: Uci,
+  uci: Uci | undefined,
   brush: string,
   modifiers?: DrawModifiers,
 ): DrawShape[] {
-  if (uci === 'Current Position') return [];
+  if (!uci || uci === 'Current Position') return [];
   const move = parseUci(uci)!;
   const to = makeSquare(move.to);
   if (isDrop(move)) return [{ orig: to, brush }, pieceDrop(to, move.role, color)];
@@ -90,7 +93,7 @@ export function makeShapesFromUci(
 }
 
 export function compute(ctrl: AnalyseCtrl): DrawShape[] {
-  const color = ctrl.node.fen.includes(' w ') ? 'white' : 'black';
+  const color = fenColor(ctrl.node.fen);
   const rcolor = opposite(color);
   if (ctrl.practice) {
     const hovering = ctrl.practice.hovering();
@@ -117,37 +120,31 @@ export function compute(ctrl: AnalyseCtrl): DrawShape[] {
     hovering = ctrl.ceval.hovering();
   }
 
-  let shapes: DrawShape[] = [],
-    badNode;
-  if (ctrl.retro && (badNode = ctrl.retro.showBadNode())) {
-    return makeShapesFromUci(color, badNode.uci!, 'paleRed', {
-      lineWidth: 8,
-    });
+  let shapes: DrawShape[] = [];
+  let badNode: TreeNode | undefined;
+  if ((badNode = ctrl.retro?.showBadNode()) && badNode.uci) {
+    return makeShapesFromUci(color, badNode.uci, 'paleRed', { lineWidth: 8 });
   }
   if (hovering?.fen === nFen) shapes = shapes.concat(makeShapesFromUci(color, hovering.uci, 'paleBlue'));
   ctrl.fork.hover(hovering?.uci);
 
-  if (ctrl.showBestMoveArrows() && ctrl.showAnalysis()) {
+  if (ctrl.isCevalAllowed() && ctrl.showBestMoveArrows() && ctrl.showEvaluation()) {
     if (isUci(nEval.best)) shapes = shapes.concat(makeShapesFromUci(rcolor, nEval.best, 'paleGreen'));
     if (!hovering && ctrl.ceval.search.multiPv) {
-      const bestPvMoves = ctrl.isCevalAllowed() && nCeval ? nCeval.pvs[0]?.moves : undefined;
+      const bestPvMoves = nCeval ? nCeval.pvs[0]?.moves : undefined;
       const nextBest = bestPvMoves?.[0] || ctrl.nextNodeBest();
 
       if (nextBest) {
         drawManeuver(ctrl, color, bestPvMoves || [nextBest], 'paleBlue', shapes);
       }
 
-      if (
-        ctrl.isCevalAllowed() &&
-        nCeval?.pvs[1] &&
-        !(ctrl.threatMode() && nThreat && nThreat.pvs.length > 2)
-      ) {
+      if (nCeval?.pvs[1] && !(ctrl.threatMode() && nThreat && nThreat.pvs.length > 2)) {
         nCeval.pvs.forEach(function (pv) {
           if (pv.moves[0] === nextBest) return;
           const shift = winningChances.povDiff(color, nCeval.pvs[0], pv);
           if (shift >= 0 && shift < 0.2) {
-            shapes = shapes.concat(
-              makeShapesFromUci(color, pv.moves[0], 'paleGrey', {
+            shapes.push(
+              ...makeShapesFromUci(color, pv.moves[0], 'paleGrey', {
                 lineWidth: Math.round(12 - shift * 50), // 12 to 2
               }),
             );
@@ -173,7 +170,13 @@ export function compute(ctrl: AnalyseCtrl): DrawShape[] {
       }
     });
   }
-  if (ctrl.showMoveAnnotationsOnBoard()) shapes = shapes.concat(annotationShapes(ctrl.node));
+  if (ctrl.showMoveAnnotations()) {
+    const glyphs = [...(ctrl.node.glyphs ?? [])];
+    const liveGlyph = ctrl.liveAnnotate?.get(ctrl.path);
+    if (liveGlyph && ctrl.settings.showLiveAnnotations && !glyphs.some(g => g.id <= 6))
+      glyphs.push(liveGlyph);
+    shapes = shapes.concat(annotationShapes({ ...ctrl.node, glyphs }));
+  }
   if (ctrl.showVariationArrows()) hiliteVariations(ctrl, shapes);
 
   if (ctrl.isCevalAllowed()) {
@@ -190,13 +193,13 @@ export function compute(ctrl: AnalyseCtrl): DrawShape[] {
     };
 
     if (ctrl.motifEnabled()) {
-      ctrl.motif.detectPins(board).forEach(p => addAnalysis(makeSquare(p.pinned) as Key, 'pin'));
+      ctrl.motif.detectPins(board).forEach(p => addAnalysis(makeSquare(p.pinned), 'pin'));
       ctrl.motif
         .detectUndefended(board, epSquare)
-        .forEach(u => addAnalysis(makeSquare(u.square) as Key, 'undefended'));
+        .forEach(u => addAnalysis(makeSquare(u.square), 'undefended'));
       ctrl.motif
         .detectCheckable(board, epSquare, castlingRights)
-        .forEach(s => addAnalysis(makeSquare(s.king) as Key, 'checkable'));
+        .forEach(s => addAnalysis(makeSquare(s.king), 'checkable'));
     }
   }
 
@@ -209,7 +212,7 @@ function hiliteVariations(ctrl: AnalyseCtrl, autoShapes: DrawShape[]) {
   ctrl.chessground.state.drawable.brushes['variation'] = {
     key: 'variation',
     color: 'white',
-    opacity: ctrl.variationArrowOpacity() || 0,
+    opacity: 0.5,
     lineWidth: 12,
   };
   const chap = ctrl.study?.data.chapter;
@@ -217,13 +220,14 @@ function hiliteVariations(ctrl: AnalyseCtrl, autoShapes: DrawShape[]) {
   for (const [i, node] of visible.entries()) {
     const existing = autoShapes.find(s => s.orig + s.dest === node.uci);
     if (existing) existing.modifiers = { hilite: i === ctrl.fork.selectedIndex ? 'white' : undefined };
-    else
-      autoShapes.push({
-        orig: node.uci!.slice(0, 2) as Key,
-        dest: node.uci?.slice(2, 4) as Key,
-        brush: !isGamebookEditor ? 'variation' : i === 0 ? 'paleGreen' : 'paleRed',
-        modifiers: { hilite: i === ctrl.fork.selectedIndex ? '#3291ff' : '#aaa' },
-        below: true,
-      });
+    else {
+      const shapes = makeShapesFromUci(
+        ctrl.turnColor(),
+        node.uci,
+        !isGamebookEditor ? 'variation' : i === 0 ? 'paleGreen' : 'paleRed',
+        { hilite: i === ctrl.fork.selectedIndex ? '#3291ff' : '#aaa' },
+      );
+      autoShapes.push(...shapes);
+    }
   }
 }

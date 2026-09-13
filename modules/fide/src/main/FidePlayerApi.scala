@@ -13,6 +13,7 @@ final class FidePlayerApi(repo: FideRepo, cacheApi: CacheApi, picfitApi: PicfitA
   import repo.player.handler
 
   export repo.player.{ fetch, setPhotoCredit }
+  export repo.rating.get as getRatings
 
   def players(ids: ByColor[Option[FideId]]): Fu[ByColor[Option[FidePlayer]]] =
     ids.traverse:
@@ -56,7 +57,7 @@ final class FidePlayerApi(repo: FideRepo, cacheApi: CacheApi, picfitApi: PicfitA
       .map(_.toMap)
 
   private[fide] def delete(id: FideId): Funit =
-    repo.playerColl.delete.one($id(id)).void
+    repo.playerColl.delete.one(bid(id)).void
 
   object guessPlayer:
 
@@ -73,10 +74,10 @@ final class FidePlayerApi(repo: FideRepo, cacheApi: CacheApi, picfitApi: PicfitA
     private val cache =
       cacheApi[TitleName, Option[FidePlayer]](1024, "player.fidePlayer.byName"):
         _.expireAfterWrite(5.minutes).buildAsyncFuture: p =>
-          val token = FidePlayer.tokenize(p.name.value)
+          val token = FidePlayer.tokenize.exec(p.name.value)
           (token.sizeIs > 2).so:
             repo.playerColl
-              .find($doc("token" -> token, "title" -> p.title))
+              .find(bdoc("token" -> token, "title" -> p.title))
               .cursor[FidePlayer]()
               .list(2)
               .map:

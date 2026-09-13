@@ -1,8 +1,9 @@
-import * as xhr from 'lib/xhr';
-import main from './main';
-import type { LobbyOpts } from './interfaces';
-import { wsConnect, wsPingInterval } from 'lib/socket';
 import { pubsub } from 'lib/pubsub';
+import { wsConnect, wsPingInterval } from 'lib/socket';
+import * as xhr from 'lib/xhr';
+
+import type { LobbyOpts } from './interfaces';
+import main from './main';
 
 export function initModule(opts: LobbyOpts) {
   opts.appElement = document.querySelector('.lobby__app') as HTMLElement;
@@ -37,7 +38,10 @@ export function initModule(opts: LobbyOpts) {
         });
       },
       featured(o: { html: string }) {
-        $('.lobby__tv').html(o.html);
+        const $tv = $('.lobby__tv'),
+          $game = $tv.find('.mini-game');
+        if ($game.length) $game.replaceWith(o.html);
+        else $tv.append(o.html);
         pubsub.emit('content-loaded');
       },
       redirect(e: RedirectTo) {
@@ -62,7 +66,6 @@ export function initModule(opts: LobbyOpts) {
       },
     );
     lobbyCtrl.setTab('real_time');
-    lobbyCtrl.redraw();
     history.replaceState(null, '', '/');
   });
 

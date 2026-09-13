@@ -16,6 +16,7 @@
   <string name="recentlyUpdated">Nyligen uppdaterade</string>
   <string name="mostPopular">Mest populära</string>
   <string name="alphabetical">Alfabetisk</string>
+  <string name="relevant">Relevant</string>
   <string name="addNewChapter">Lägg till ett nytt kapitel</string>
   <plurals name="nbChapters">
     <item quantity="one">%s Kapitel</item>
@@ -41,7 +42,6 @@
   <string name="youAreNowASpectator">Du är nu en åskådare</string>
   <string name="pgnTags">PGN taggar</string>
   <string name="like">Gilla</string>
-  <string name="unlike">Sluta gilla</string>
   <string name="newTag">Ny tag</string>
   <string name="commentThisPosition">Kommentera denna position</string>
   <string name="commentThisMove">Kommentera detta drag</string>

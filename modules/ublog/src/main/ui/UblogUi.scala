@@ -9,6 +9,7 @@ import lila.ui.*
 import lila.core.ublog.{ BlogsBy, QualityFilter }
 
 import ScalatagsTemplate.{ *, given }
+import lila.ublog.UblogPost.PreviewPost
 
 final class UblogUi(helpers: Helpers, atomUi: AtomUi, modMenu: Context ?=> Frag)(
     picfitUrl: lila.memo.PicfitUrl
@@ -57,7 +58,7 @@ final class UblogUi(helpers: Helpers, atomUi: AtomUi, modMenu: Context ?=> Frag)
         if showAuthor != ShowAt.none
         then userIdSpanMini(post.created.by)(cls := s"ublog-post-card__over-image pos-$showAuthor")
         else if ~post.sticky
-        then span(dataIcon := Icon.Star, cls := "user-link ublog-post-card__over-image pos-top")
+        then span(iconTag(Icon.Star))(cls := "user-link ublog-post-card__over-image pos-top")
         else emptyFrag
       ),
       span(cls := "ublog-post-card__content")(
@@ -79,7 +80,7 @@ final class UblogUi(helpers: Helpers, atomUi: AtomUi, modMenu: Context ?=> Frag)
   def editUrlOfPost(post: UblogPost.BasePost) = routes.Ublog.edit(post.id)
 
   def newPostLink(user: User)(using Context) = a(
-    href := routes.Ublog.form(user.username),
+    href := routes.Ublog.getEditForm(user.username),
     cls := "button button-green",
     dataIcon := Icon.PlusButton,
     title := trans.ublog.newPost.txt()
@@ -387,10 +388,6 @@ final class UblogUi(helpers: Helpers, atomUi: AtomUi, modMenu: Context ?=> Frag)
             href := langHref(routes.Ublog.communityAll())
           )(trans.ublog.community()),
           a(
-            cls := isActive("search"),
-            href := langHref(routes.Ublog.search())
-          )("Search"),
-          a(
             cls := isActive("by-month"),
             href := langHref(routes.Ublog.thisMonth())
           )(trans.ublog.byMonth()),
@@ -417,6 +414,18 @@ final class UblogUi(helpers: Helpers, atomUi: AtomUi, modMenu: Context ?=> Frag)
               a(cls := mine.option("active"), href := routes.Ublog.index(me.username))(trans.ublog.myBlog())
             )
         )
+      )
+    )
+
+  def homeCarousel(posts: List[PreviewPost])(using Context) =
+    div(cls := "lobby__blog carousel")(
+      div(cls := "carousel__track"):
+        posts.map:
+          card(_, showAuthor = ShowAt.bottom, showIntro = false, strictDate = false)
+      ,
+      div(cls := "carousel__controls")(
+        button(cls := "carousel__prev", dataIcon := Icon.LessThan),
+        button(cls := "carousel__next", dataIcon := Icon.GreaterThan)
       )
     )
 
@@ -463,8 +472,9 @@ final class UblogUi(helpers: Helpers, atomUi: AtomUi, modMenu: Context ?=> Frag)
       filterOpt.isDefined.option(
         span(
           "Show",
-          if Granter.opt(_.ModerateBlog) then span(cls := "btn-rack")(QualityFilter.values.map(filterBtn))
-          else span(cls := "btn-rack")(filterBtn(QualityFilter.best), filterBtn(QualityFilter.all))
+          span(cls := "btn-rack"):
+            if Granter.opt(_.ModerateBlog) then QualityFilter.values.map(filterBtn)
+            else frag(filterBtn(QualityFilter.best), filterBtn(QualityFilter.all))
         )
       ),
       sortOpt.map: by =>
@@ -484,7 +494,7 @@ final class UblogUi(helpers: Helpers, atomUi: AtomUi, modMenu: Context ?=> Frag)
     )
 
   private def btnCls(active: Boolean, other: String = ""): Modifier =
-    cls := s"btn-rack__btn $other" + (if active then " lit" else "")
+    cls := List("btn-rack__btn" -> true, "active" -> active, other -> other.nonEmpty)
 
   private def modForm(blog: UblogBlog) =
     val colorCls = if blog.modNote.isDefined then "button-red" else "button-dim"

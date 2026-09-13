@@ -1,5 +1,6 @@
-import { updateElements, formatClockTimeVerbal } from './clockView';
 import { ShowClockTenths } from '@/prefs';
+
+import { updateElements, formatClockTimeVerbal } from './clockView';
 
 export interface ClockOpts {
   onFlag(): void;
@@ -52,11 +53,13 @@ interface EmergSound {
 export interface SetData {
   white: Seconds;
   black: Seconds;
-  ticking: Color | undefined;
+  ticking?: Color;
   delay?: Centis; // network lag to visually compensate
 }
 
 export class ClockCtrl {
+  readonly config: ClockConfig;
+
   emergSound: EmergSound = {
     play: () => site.sound.play('lowTime'),
     delay: 20000,
@@ -65,16 +68,13 @@ export class ClockCtrl {
       black: true,
     },
   };
-
   showTenths: (millis: Millis) => boolean;
   showBar: boolean;
   times: Times;
-
   barTime: number;
   timeRatioDivisor: number;
   emergMs: Millis;
   alarmAction?: { seconds: Seconds; fire: () => void };
-
   elements: ByColor<ClockElements> = { white: {}, black: {} };
 
   private tickTimeout?: Timeout;
@@ -85,6 +85,7 @@ export class ClockCtrl {
     ticking: Color | undefined,
     readonly opts: ClockOpts,
   ) {
+    this.config = data;
     this.showTenths =
       pref.clockTenths === ShowClockTenths.Never
         ? () => false
@@ -138,7 +139,7 @@ export class ClockCtrl {
 
   hardStopClock = (): void => (this.times.activeColor = undefined);
 
-  private scheduleTick = (time: Millis, extraDelay: Millis) => {
+  private readonly scheduleTick = (time: Millis, extraDelay: Millis) => {
     if (this.tickTimeout !== undefined) clearTimeout(this.tickTimeout);
     // changing the value of active node confuses the chromevox screen reader
     // so update the clock less often for blind mode.
@@ -154,7 +155,7 @@ export class ClockCtrl {
   };
 
   // Should only be invoked by scheduleTick.
-  private tick = (): void => {
+  private readonly tick = (): void => {
     this.tickTimeout = undefined;
 
     const color = this.times.activeColor;

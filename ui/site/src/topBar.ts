@@ -1,10 +1,11 @@
-import { loadCssPath, loadEsm } from './asset';
-import { memoize } from 'lib';
-import { spinnerHtml } from 'lib/view';
+import { blurIfEscape, blurIfPrimaryClick, memoize } from 'lib';
 import { clamp } from 'lib/algo';
+import { isTouchDevice } from 'lib/device';
 import { pubsub } from 'lib/pubsub';
 import { wsSend } from 'lib/socket';
-import { isTouchDevice } from 'lib/device';
+import { spinnerHtml } from 'lib/view';
+
+import { loadCssPath, loadEsm } from './asset';
 
 export default function () {
   const top = document.getElementById('top')!;
@@ -38,7 +39,8 @@ export default function () {
     document.body.classList.toggle('masked', menuOpen);
   });
 
-  $(top).on('click', '.toggle', function (this: HTMLElement) {
+  $(top).on('click', '.toggle', function (this: HTMLElement, e: Event) {
+    blurIfPrimaryClick(e);
     const $p = $(this).parent().toggleClass('shown');
     $p.siblings('.shown').removeClass('shown');
     setTimeout(() => {
@@ -159,14 +161,20 @@ export default function () {
     const $wrap = $('#clinput');
     if (!$wrap.length) return;
     const $input = $wrap.find('input');
-    let booted = false;
+    let booted = false,
+      clicked = false;
     const boot = () => {
       if (booted) return;
       booted = true;
       loadEsm('cli', { init: { input: $input[0] } }).catch(() => (booted = false));
     };
     $input.on({
+      keydown: blurIfEscape,
+      click: () => {
+        clicked = true;
+      },
       blur() {
+        clicked = false;
         $input.val('');
         $('body').removeClass('clinput');
       },
@@ -185,7 +193,7 @@ export default function () {
       if ($input[0] !== document.activeElement) $input[0]!.focus();
     });
     $wrap.on('mouseleave', () => {
-      if (!$input.val()) $input[0]!.blur();
+      if (!clicked && !$input.val()) $input[0]!.blur();
     });
     site.mousetrap
       .bind('/', () => {

@@ -2,38 +2,25 @@
   border-radius: $box-radius-size;
 }
 
+@mixin box-radius-top {
+  border-radius: $box-radius-size $box-radius-size 0 0;
+}
+
 @mixin box-shadow {
   box-shadow:
-    0 2px 2px 0 rgba(0, 0, 0, 0.14),
-    0 3px 1px -2px rgba(0, 0, 0, 0.2),
-    0 1px 5px 0 rgba(0, 0, 0, 0.12);
-}
-
-@mixin box-neat {
-  @include box-radius;
-  @include box-shadow;
-}
-
-@mixin debug-zoom-input {
-  #zoom-input {
-    display: none;
-
-    @include mq-zoom-enabled {
-      display: block;
-      position: fixed;
-      bottom: 3px;
-      @include inline-end(3px);
-      width: 10vw;
-    }
-  }
+    0 2px 2px 0 rgb(0 0 0 / 0.08),
+    0 3px 1px -2px rgb(0 0 0 / 0.18),
+    0 1px 5px 0 rgb(0 0 0 / 0.1);
 }
 
 @mixin transition($prop: all, $dur: $transition-duration, $timing: ease) {
   @if type-of($prop) == 'list' and length($prop) > 1 {
     $out: ();
+
     @for $i from 1 through length($prop) {
       $out: append($out, nth($prop, $i) $dur $timing, comma);
     }
+
     transition: $out;
   } @else {
     transition: $prop $dur $timing;
@@ -43,6 +30,7 @@
 @mixin hoverflow {
   scrollbar-gutter: stable;
   overflow-y: auto;
+
   @media (hover: hover) {
     &:not(:hover) {
       overflow: hidden;
@@ -84,7 +72,12 @@
     height: 100%;
     z-index: -1;
     backdrop-filter: blur($size);
-    -webkit-backdrop-filter: blur($size);
+  }
+}
+
+@mixin backdrop-blur-if-transparent($size: 6px) {
+  @include if-transp {
+    backdrop-filter: blur($size);
   }
 }
 
@@ -96,9 +89,10 @@
     padding: 0;
     width: unset;
     background: unset;
-    border-bottom: unset;
+    border-bottom-color: transparent;
     transform: unset;
-    ---site-header-sticky-padding: 0px;
+
+    ---site-header-sticky-padding: 0;
 
     #topnav,
     .dropdown {
@@ -108,8 +102,9 @@
       transition: unset;
     }
   }
+
   #main-wrap {
-    margin-top: $site-header-margin;
+    margin-top: var(---sticky-gap);
   }
 }
 
@@ -117,9 +112,10 @@
   display: block;
   position: relative;
   aspect-ratio: $aspect-ratio;
+
   &::after {
-    @extend %flex-center;
-    justify-content: center;
+    @extend %flex-center-center;
+
     content: attr(alt);
     position: absolute;
     top: 0;
@@ -132,10 +128,10 @@
 }
 
 @mixin gradient-border($c, $ltr-dir, $rtl-dir) {
-  background: linear-gradient($ltr-dir, $c 0px, $c 5px, rgba(0, 0, 0, 0) 5px, rgba(0, 0, 0, 0) 100%);
+  background: linear-gradient($ltr-dir, $c 0, $c 5px, rgb(0 0 0 / 0) 5px, rgb(0 0 0 / 0) 100%);
 
   @include if-rtl {
-    background: linear-gradient($rtl-dir, $c 0px, $c 5px, rgba(0, 0, 0, 0) 5px, rgba(0, 0, 0, 0) 100%);
+    background: linear-gradient($rtl-dir, $c 0, $c 5px, rgb(0 0 0 / 0) 5px, rgb(0 0 0 / 0) 100%);
   }
 }
 
@@ -149,5 +145,72 @@
 
 @mixin prevent-select {
   user-select: none;
-  -webkit-user-select: none;
+}
+
+@mixin with-metal-shadow($defaultShadow: (), $lightShadow: (), $soft: false) {
+  $bottom-blur: 6px;
+
+  @include if-transp {
+    $bottom-blur: 8px;
+  }
+
+  box-shadow:
+    inset 0 1px 3px -2px hsl(0, 0%, if($soft == true, 30%, 45%)),
+    inset 0 -4px $bottom-blur -3px hsl(from $c-body-gradient h s calc(l + 3) / 0.8),
+    if($defaultShadow != (), 0 1px 3px 0 $defaultShadow, ());
+
+  @include if-light {
+    box-shadow:
+      inset 0 if($soft == true, 2px, 3px) 3px -2px #fff6,
+      inset 0 -4px $bottom-blur -3px hsl(from $c-body-gradient h s calc(l + 5) / 0.8),
+      if($defaultShadow != (), 0 1px 3px 0 if($lightShadow != (), $lightShadow, $defaultShadow), ());
+  }
+}
+
+@mixin with-metal-hover-shadow($defaultShadow: (), $lightShadow: (), $soft: false) {
+  $bottom-blur: 8px;
+
+  @include if-transp {
+    $bottom-blur: 16px;
+  }
+
+  box-shadow:
+    inset 0 1px 3px -2px $c-border-light,
+    inset 0 -5px $bottom-blur -3px hsl(from $c-body-gradient h s calc(l + 5) / 0.8),
+    if($defaultShadow != (), 0 2px 4px 0 $defaultShadow, ());
+
+  @include if-light {
+    box-shadow:
+      inset 0 if($soft == true, 3px, 4px) 3px -2px #fff6,
+      inset 0 -5px 8 $bottom-blur -3px hsl(from $c-body-gradient h s calc(l + 7) / 0.8),
+      if($defaultShadow != (), 0 2px 4px 0 if($lightShadow != (), $lightShadow, $defaultShadow), ());
+  }
+}
+
+@mixin with-button-shadow($topShadow: (), $bottomShadow: (), $lighTopShadow: (), $lightBottomShadow: ()) {
+  box-shadow:
+    inset 0 1px 3px -2px $topShadow,
+    inset 0 -4px 6pt -3pt $bottomShadow,
+    0 1px 3px 0 hsl(0 0% 0% / 0.2);
+
+  @include if-light {
+    box-shadow:
+      inset 0 2px 3px -2px if($lighTopShadow != (), $lighTopShadow, $topShadow),
+      inset 0 -4px 6pt -3pt if($lightBottomShadow != (), $lightBottomShadow, $bottomShadow),
+      0 1px 3px 0 hsl(0 0% 0% / 0.18);
+  }
+
+  &:not(.disabled, :disabled, [disabled]):hover {
+    box-shadow:
+      inset 0 1px 3px -2px $topShadow,
+      inset 0 -5px 6pt -3pt $bottomShadow,
+      0 2px 4px 0 hsl(0 0% 0% / 0.24);
+
+    @include if-light {
+      box-shadow:
+        inset 0 2px 3px -2px if($lighTopShadow != (), $lighTopShadow, $topShadow),
+        inset 0 -5px 6pt -3pt if($lightBottomShadow != (), $lightBottomShadow, $bottomShadow),
+        0 2px 4px 0 hsl(0 0% 0% / 0.21);
+    }
+  }
 }

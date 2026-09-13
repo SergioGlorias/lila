@@ -43,7 +43,7 @@ case class RelayTour(
 
   def official = tier.isDefined
 
-  def isOwnedBy[U: UserIdOf](u: U): Boolean = ownerIds.toList.contains(u.id)
+  def isOwnedBy[U: UserIdOf](u: U): Boolean = ownerIds.contains(u.id)
 
   def communityOwner: Option[UserId] = tier.isEmpty.option(ownerIds.head)
 
@@ -64,6 +64,10 @@ case class RelayTour(
   def isPrivate = visibility == Visibility.`private`
 
   def canView(using me: Option[Me]) = !isPrivate || me.so(isOwnedBy)
+
+  def daysSinceFinished =
+    import java.time.temporal.ChronoUnit
+    dates.flatMap(_.end).map(ChronoUnit.DAYS.between(_, nowInstant))
 
 object RelayTour:
 
@@ -106,9 +110,11 @@ object RelayTour:
       timeZone: Option[ZoneId],
       players: Option[String],
       website: Option[URL],
-      standings: Option[URL]
+      standings: Option[URL],
+      regulations: Option[URL]
   ):
-    def nonEmpty = List(format, tc, fideTC, location, players, website, standings).exists(_.nonEmpty)
+    def nonEmpty =
+      List(format, tc, fideTC, location, players, website, standings, regulations).exists(_.nonEmpty)
     override def toString = List(format, tc, fideTC, location, players).flatten.mkString(" | ")
     lazy val fideTCOrGuess: FideTC = fideTC | FideTC.standard
     def timeZoneOrDefault: ZoneId = timeZone | ZoneId.systemDefault

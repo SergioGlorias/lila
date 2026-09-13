@@ -130,7 +130,6 @@
   <string name="enable">Įjungti</string>
   <string name="bestMoveArrow">Geriausio ėjimo rodyklė</string>
   <string name="showVariationArrows">Rodyti variacijų rodykles</string>
-  <string name="evaluationGauge">Vertinimo matuoklis</string>
   <string name="visualMotifs">Vizualiniai motyvai</string>
   <string name="undefendedPieces">Neapsaugotos figūros</string>
   <string name="pinnedPieces">Surištos figūros</string>
@@ -267,7 +266,6 @@
   <string name="changeUsernameNotSame">Galima keisti tik raidžių dydį. Pvz., „vardaspav“ į „VardasPav“.</string>
   <string name="changeUsernameDescription">Pasikeiskite naudotojo vardą. Tai gali būti atlikta tik kartą, ir keisti galite tik raidžių dydį.</string>
   <string name="signupUsernameHint">Įsitikinkite, kad jūsų vartotojo vardas yra tinkamas visų amžių auditorijai. Jo vėliau pasikeisti negalėsite. Bet kokie netinkami vartotojų vardai bus uždaryti!</string>
-  <string name="signupEmailHint">Jį naudosime tik atkurti slaptažodžiui.</string>
   <string name="password">Slaptažodis</string>
   <string name="changePassword">Keisti slaptažodį</string>
   <string name="changeEmail">Keisti el. pašto adresą</string>
@@ -291,9 +289,6 @@
   <string name="emailCanTakeSomeTime">Atvykimas gali šiek tiek užtrukti.</string>
   <string name="refreshInboxAfterFiveMinutes">Palaukite penkias minutes ir atnaujinkite savo el. pašto dėžutę.</string>
   <string name="checkSpamFolder">Pasitikrinkite šlamtšo aplanką, laiškas galėjo atsirasti ir ten. Jei taip įvyko - pažymėkite kaip ne šlamštą.</string>
-  <string name="emailForSignupHelp">Jei niekas nepavyko, atsiųskite mums tokį laišką:</string>
-  <string name="copyTextToEmail">Nukopijuokite tekstą viršuje ir atsiųskite į %s</string>
-  <string name="waitForSignupHelp">Ne už ilgo susisieksime su jumis ir padėsime užbaigti prisijungimo procesą.</string>
   <string name="accountConfirmed">Vartotojas %s sėkmingai patvirtintas.</string>
   <string name="accountCanLogin">Šiuo metu negalite prisijungti kaip %s.</string>
   <string name="accountConfirmationEmailNotNeeded">Jums nereikia patvirtinimo laiško.</string>
@@ -491,7 +486,6 @@
   <string name="apply">Pritaikyti</string>
   <string name="save">Įrašyti</string>
   <string name="leaderboard">Lyderiai</string>
-  <string name="screenshotCurrentPosition">Nufotografuoti esamą poziciją</string>
   <string name="gameAsGIF">Žaidimas kaip GIF animacija</string>
   <string name="playerNames">Žaidėjų vardai</string>
   <string name="moveAnnotations">Ėjimų žymėjimas</string>
@@ -611,7 +605,6 @@ kompiuterinę analizę, partijos pokalbį bei URL dalinimuisi.</string>
   <string name="oneUrlPerLine">Vienas adresas per eilutę.</string>
   <string name="inlineNotation">Įterptas žymėjimas</string>
   <string name="makeAStudy">Norėdami pasiekti vėliau ar pasidalinti sukurkite studiją.</string>
-  <string name="clearSavedMoves">Išvalyti ėjimus</string>
   <string name="previouslyOnLichessTV">Anksčiau per „lichess TV“</string>
   <string name="onlinePlayers">Prisijungę žaidėjai</string>
   <string name="activePlayers">Aktyvumas</string>
@@ -800,11 +793,6 @@ kompiuterinę analizę, partijos pokalbį bei URL dalinimuisi.</string>
   <string name="keyCycleSelectedVariation">Praeiti pasirinktą variantą</string>
   <string name="keyShowOrHideComments">rodyti/slėpti komentarus</string>
   <string name="keyEnterOrExitVariation">įeiti/išeiti iš variacijos</string>
-  <string name="keyRequestComputerAnalysis">Paprašyti kompiuterio analizės, pasimokykite iš savo klaidų</string>
-  <string name="keyNextLearnFromYourMistakes">Toliau (pasimokyti iš savo klaidų)</string>
-  <string name="keyNextBlunder">Kita šiurkšti klaida</string>
-  <string name="keyNextMistake">Kita klaida</string>
-  <string name="keyNextInaccuracy">Kitas netiklsumas</string>
   <string name="keyPreviousBranch">Praeita atšaka</string>
   <string name="keyNextBranch">Sekanti atšaka</string>
   <string name="toggleVariationArrows">Rodyti variacijų rodykles</string>
@@ -894,7 +882,6 @@ kompiuterinę analizę, partijos pokalbį bei URL dalinimuisi.</string>
   <string name="background">Fonas</string>
   <string name="light">Šviesus</string>
   <string name="dark">Tamsus</string>
-  <string name="transparent">Permatomas</string>
   <string name="deviceTheme">Įrenginio tema</string>
   <string name="backgroundImageUrl">Fono paveikslo URL:</string>
   <string name="board">Lenta</string>
@@ -1003,7 +990,6 @@ kompiuterinę analizę, partijos pokalbį bei URL dalinimuisi.</string>
   <string name="agreementAssistance">Pasižadu niekada savo partijų metu nesinaudoti kompiuterio, knygos, duomenų bazės ar kito žmogaus pagalba.</string>
   <string name="agreementNice">Pasižadu visada būti pagarbus kitiems žaidėjams.</string>
   <string name="agreementMultipleAccounts" comment="%s will be replaced with the translation of 'termsOfService'">Aš sutinku, kad nekursiu daugiau nei vienos paskyros (išskyrus priežastis nurodytas %s).</string>
-  <string name="agreementPolicy">Pasižadu laikytis visų „Lichess“ nuostatų.</string>
   <string name="searchOrStartNewDiscussion">Ieškokite, arba pradėkite naują diskusiją</string>
   <string name="edit">Keisti</string>
   <string name="ultraBullet" comment="Probably best left untranslated. Leave it as 'UltraBullet' unless your language has a better word for it.">Ultra-kulka</string>
@@ -1039,7 +1025,6 @@ kompiuterinę analizę, partijos pokalbį bei URL dalinimuisi.</string>
   <string name="xInvitedYouToY">%1$s pakvietė jus į \"%2$s\".</string>
   <string name="youAreNowPartOfTeam">Jūs jau esate komandos dalis.</string>
   <string name="youHaveJoinedTeamX">Jūs prisijungėte prie \"%1$s\".</string>
-  <string name="someoneYouReportedWasBanned">Kažkas, apie ką pranešėte, buvo užblokuotas</string>
   <string name="congratsYouWon">Sveikiname, jūs laimėjote!</string>
   <string name="gameVsX">Žaidimas prieš %1$s</string>
   <string name="resVsX">%1$s prieš %2$s</string>
@@ -1095,7 +1080,6 @@ Palikite tuščią norėdami pradėti žaidimą nuo įprastos pradinės pozicijo
   <string name="gameInProgress">Jūs jau turite vykstančią partiją su %s.</string>
   <string name="abortTheGame">Atšaukti partiją</string>
   <string name="resignTheGame">Pasiduoti</string>
-  <string name="youCantStartNewGame">Jūs negalite pradėti naujos partijos kol nepabaigta ši.</string>
   <string name="since">Nuo</string>
   <string name="until">Iki</string>
   <string name="lichessDbExplanation">Reitinguoti žaidimai paimti iš visų Lichess žaidėjų</string>

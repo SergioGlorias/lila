@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+  <string name="playAgainstComputer">کۆمپیتەر</string>
   <string name="toInviteSomeoneToPlayGiveThisUrl">بۆ بانگهێشت کردنی کەسێک بۆ یاریکردن, ئەم بەستەرەیان پێ بدە</string>
   <string name="gameOver">یاریەکە کۆتایی هات</string>
   <string name="waitingForOpponent">چاوەڕوانی لایەینی بەرامبەر</string>
@@ -119,7 +120,6 @@
   <string name="enable">چالاککراوە</string>
   <string name="bestMoveArrow">باشترین جووڵە بە شێووی تیر دیاری بکە</string>
   <string name="showVariationArrows">تیرەکانی جۆرەکان پیشان بدە</string>
-  <string name="evaluationGauge">پێوانەی هەڵسەنگاندن</string>
   <string name="multipleLines">زیادکردنی هێڵەکان</string>
   <string name="cpus">CPUs</string>
   <string name="memory">یادگە</string>
@@ -225,7 +225,6 @@
   <string name="changeUsernameNotSame">تەنها دەتوانی گەورە و بچوکی پیتەکان بگۆڕیت.</string>
   <string name="changeUsernameDescription">ناوی بەکارهێنەر بگۆڕە. بۆت هەیە تەنها یەکجار ناوی بەکارهێنەر بگۆڕیت، دواتر تەنها دەتوانی شێوازی گەورە و بچوکی پیتەکان دەستکاری بکەی.</string>
   <string name="signupUsernameHint">هەوڵدە ناوێکی شیاو هەڵبژێریت. داواتر لە هیچ هەژمارێک ڕێگەت پێنادرێ ناوەکە بگۆڕیت و هەرناوێکی نەشیاو هەبێت هەژمارەکەت دادەخرێت!</string>
-  <string name="signupEmailHint">ئێمە تەنها بۆ دووبارە نوێکردنەوەی ووشەی نهێنی بەکاری دەهێنین.</string>
   <string name="password">وشەی نهێنی</string>
   <string name="changePassword">گۆڕینی وشەی نهێنی</string>
   <string name="changeEmail">گۆڕینی ئیمێڵ</string>
@@ -249,9 +248,6 @@
   <string name="emailCanTakeSomeTime">رەنگە کەمێک کات بخایەنێت تا دەگات.</string>
   <string name="refreshInboxAfterFiveMinutes">پێنج خولەک چاوەڕێبکە پاشان جارێکی دیکە ئیمێڵەکەت سەیربکە.</string>
   <string name="checkSpamFolder">هەروەها بەشی سپام لە ناو ئیمێڵەکەت بپشکنە، ڕەنگە چوبێتە ئەوێ. ئەگەر لەوێ بوو، بیکەوە و نیشانیبکە کە \"سپام نییە\".</string>
-  <string name="emailForSignupHelp">ئەگەر هەموو ئەمانە شکستیان هێنا، ئەوکات ئیمێڵێک بۆ ئێمە بنێرە:</string>
-  <string name="copyTextToEmail">ئەو دەقەی سەرەوە کۆپی پەیست بکەو بینێرە بۆ %s</string>
-  <string name="waitForSignupHelp">لە ماوەیەکی کەم دەگەڕێینەوە لات بۆ ئەوەی یارمەتیت بدەین لە ناو تۆمارکردنەکەت.</string>
   <string name="accountConfirmed">ناوەکە %s بەسەرکەوتوویی پشتراست کرایەوە.</string>
   <string name="accountCanLogin">ئێستا تۆ دەتوانیت بچیتە ژوورەوە بە ناوی %s.</string>
   <string name="accountConfirmationEmailNotNeeded">پێویستت بە ئیمێڵی پشت راستکردنەوە نییە.</string>
@@ -414,7 +410,6 @@
   <string name="apply">رازیبوون</string>
   <string name="save">هەڵگرتن</string>
   <string name="leaderboard">باشترین یاریزانەکان</string>
-  <string name="screenshotCurrentPosition">شوێنی ئێستای سکرینشۆت</string>
   <string name="gameAsGIF">یاری بە فۆرماتی GIF</string>
   <string name="pasteTheFenStringHere">لێرە FENـەکە پەیست بکە</string>
   <string name="pasteThePgnStringHere">لێرە PGNـەکە پەیست بکە</string>
@@ -523,7 +518,6 @@
   <string name="oneUrlPerLine">یەک URL بۆ هەر خانەیەک.</string>
   <string name="inlineNotation">نووسینی ناو هێڵ</string>
   <string name="makeAStudy">بۆ پاراستن و هاوبەشکردن، خوێندن لەبەرچاوبگرە.</string>
-  <string name="clearSavedMoves">سڕینەوەی جوڵەکان</string>
   <string name="previouslyOnLichessTV">پێشتر لە کەناڵی لیی چێس</string>
   <string name="onlinePlayers">یاریزانانی سەرهێڵ</string>
   <string name="activePlayers">یاریزانە چالاکەکان</string>
@@ -703,11 +697,6 @@
   <string name="keyGoToStartOrEnd">برۆ بۆ کۆتا/سەرەتا</string>
   <string name="keyShowOrHideComments">پێشاندان/شاردنەوەی کۆمێنتەکان</string>
   <string name="keyEnterOrExitVariation">داخڵکردن/دەرچوون لە گۆڕاوەکان</string>
-  <string name="keyRequestComputerAnalysis">داواکردنی شیکاری کۆمپیوتەری، لە هەڵەکانتەوە فێربە</string>
-  <string name="keyNextLearnFromYourMistakes">دواتر (لە هەڵەکانتەوە فێرببە)</string>
-  <string name="keyNextBlunder">بڵەندەر(هەڵە) ی دواتر</string>
-  <string name="keyNextMistake">میستەیک(هەڵە) ی دواتر</string>
-  <string name="keyNextInaccuracy">جووڵەی ناپێویستی دواتر</string>
   <string name="keyPreviousBranch">لقی پێشوو</string>
   <string name="keyNextBranch">لقی دواتر</string>
   <string name="playSelectedMove">یاری بە جووڵەی ھەڵبژێردراو بکە</string>
@@ -786,7 +775,6 @@
   <string name="background">پاشبنەما</string>
   <string name="light">روناکی</string>
   <string name="dark">تاریک</string>
-  <string name="transparent">رۆشن</string>
   <string name="deviceTheme">هەمان شێوازی ئامێرەکەت</string>
   <string name="backgroundImageUrl">URLـی وێنەی پاشبنەما:</string>
   <string name="board">تەختە</string>
@@ -886,7 +874,6 @@
   <string name="agreementAssistance">منیش ڕازیم کە لە هیچ کاتێکدا لە کاتی یارییەکانمدا یارمەتی وەرناگرم (لە کۆمپیوتەرێکی شەترەنج، کتێب، بنکەدراوە یان کەسێکی ترەوە).</string>
   <string name="agreementNice">منیش لەگەڵ ئەوەدام کە هەمیشە ڕێز لە یاریزانەکانی تر دەگرم.</string>
   <string name="agreementMultipleAccounts" comment="%s will be replaced with the translation of 'termsOfService'">منیش لەگەڵ ئەوەدام کە چەندین ئەکاونت دروست ناکەم (جگە لەو هۆکارانەی کە لە %s دا هاتووە).</string>
-  <string name="agreementPolicy">منیش لەگەڵ ئەوەدام کە هەموو سیاسەتەکانی لیچێس پەیڕەو دەکەم.</string>
   <string name="searchOrStartNewDiscussion">گەڕان یان دەستپێکردنی گفتوگۆی نوێ</string>
   <string name="edit">دەستکاریکردن</string>
   <string name="bullet" comment="Probably best left untranslated. Leave it as 'Bullet' unless your language has a better word for it.">بوڵێت \"Bullet\"</string>
@@ -921,7 +908,6 @@
   <string name="xInvitedYouToY">%1$s تۆی بانگهێشتکرد بۆ \"%2$s\".</string>
   <string name="youAreNowPartOfTeam">ئێستا تۆ بەشێکی لەو یانەیە.</string>
   <string name="youHaveJoinedTeamX">تۆ باشداریتکرد لە \"%1$s\".</string>
-  <string name="someoneYouReportedWasBanned">کەسێک کە تۆ راپۆرتتلێدا ئێستا قەدەغەکراوە</string>
   <string name="congratsYouWon">پیرۆزە، تۆ بوویت بە براوە!</string>
   <string name="gameVsX">یاری لە دژی %1$s</string>
   <string name="resVsX">%1$s دژی %2$s</string>
@@ -976,7 +962,6 @@
   <string name="gameInProgress">یارییەکت لە پێشە لەگەڵ %s.</string>
   <string name="abortTheGame">یاریەکە هەڵوەشێنەوە</string>
   <string name="resignTheGame">دەست لە یاریەکە بکێشە</string>
-  <string name="youCantStartNewGame">تا ئەم یارییە تەواو نەبێت ناتوانیت دەست بە یارییەکی نوێ بکەیت.</string>
   <string name="since">لەوەتەی</string>
   <string name="until">تاوەکو</string>
   <string name="lichessDbExplanation">نمونەیەک لە یارییە هەڵسەنگێنراوەکان، لە هەموو یاریزانەکانی لیچێس</string>

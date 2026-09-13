@@ -121,7 +121,6 @@
   <string name="enable">सक्षम पार्नुहोस्</string>
   <string name="bestMoveArrow">उत्कृष्ट चालको तीर</string>
   <string name="showVariationArrows">भिन्नताहरूको सुचक तिर देखाउनु</string>
-  <string name="evaluationGauge">मुल्यांकन गेज</string>
   <string name="multipleLines">थप लाइनहरु</string>
   <string name="cpus">CPU संख्या</string>
   <string name="memory">स्मृति</string>
@@ -204,7 +203,6 @@
   <string name="changeUsernameNotSame">अक्षरलाई सानो ठुलो मात्र पार्न सकिनेछ। जस्तै: \"johndoe\" बाट \"JohnDoe\"</string>
   <string name="changeUsernameDescription">तपाइको \"युजर नेम\" परिवर्तन गर्नुहोस्। यो एकपटक मात्र गर्न सक्नुहुनेछ र अक्षरलाई सानो ठुलो मात्र पार्न सकिनेछ।</string>
   <string name="signupUsernameHint">क्रिपया प्रयोगकर्ता नाम राख्दा पारिवारीक शब्द चयन गर्नुहोला। यसलाई पछि बदल्न मिल्ने छैन र अनुपयुक्त नाम भएका खाताहरू बन्द गरिने छन्।</string>
-  <string name="signupEmailHint">यसलाई हामी पासवर्ड रिसेट गर्न मात्र प्रयोग गर्ने छौँ ।</string>
   <string name="password">पासवर्ड</string>
   <string name="changePassword">पासवर्ड बदल्नुहोस्</string>
   <string name="changeEmail">इमेल बदल्नुहोस्</string>
@@ -228,9 +226,6 @@
   <string name="emailCanTakeSomeTime">इमेल आउन केहि समय लाग्न सक्छ।</string>
   <string name="refreshInboxAfterFiveMinutes">५ मिनेट कुर्नुहोस् र इमेल इनबक्स रिफ्रेस गर्नुहोस्</string>
   <string name="checkSpamFolder">स्पाम (spam) फोल्डर पनि हेर्नुहोस्, त्यता परेको हुन सक्छ । त्यस्तो छ भने स्पाम हैन भनेर मार्क गर्नुहोस् ।</string>
-  <string name="emailForSignupHelp">सबै कुरा विफल भए, हामीलाई यो इमेल पठाउनुहोस् । </string>
-  <string name="copyTextToEmail">माथि को टेक्स्ट कपि पेस्ट गरेर %s लाई पठाउनुहोस् । </string>
-  <string name="waitForSignupHelp">तपाईंको signup पूरा गर्नमा मद्दत गर्न, हामी चाँडै नै तपाईंलाई सम्पर्क गर्नेछौं।</string>
   <string name="accountCanLogin">अब तपाई %s भएर लगइन गर्न सक्नुहुनेछ ।</string>
   <string name="rank">स्थान</string>
   <string name="rankX">स्थान: %s</string>
@@ -375,7 +370,6 @@
   <string name="apply">पेश</string>
   <string name="save">सुरक्षित गर्नुहोस्</string>
   <string name="leaderboard">सर्वोत्कृष्ट खेलाडीहरु</string>
-  <string name="screenshotCurrentPosition">अहिलेको पोजिशनको स्क्रिनसट निकाल्नुहोस् ।</string>
   <string name="gameAsGIF">GIF को रूपमा सेभ गर्नुहोस्</string>
   <string name="pasteTheFenStringHere">FEN स्ट्रिङ्ग यहाँ पेष्ट गरौं</string>
   <string name="pasteThePgnStringHere">PGN स्ट्रिङ्ग यहाँ पेष्ट गरौं</string>
@@ -564,7 +558,7 @@
   <string name="ifRatingIsPlusMinusX">यदि रेटिंग ± %s छ भने</string>
   <string name="onlyFriends">मित्रहरु मात्र</string>
   <string name="menu">सुची</string>
-  <string name="castling" comment="Label for a box on the right side of the board editor, where the user can select castling rights. Noun.&#10;&#10;NOTE: this string used to read &quot;Castling&quot;, with &quot;rights&quot; added in 2026 for clarity.">क्यस्लिंग</string>
+  <string name="castling">क्यस्लिंग</string>
   <string name="whiteCastlingKingside">सेतो O-O</string>
   <string name="blackCastlingKingside">कालो O-O</string>
   <plurals name="nbForumPosts">
@@ -676,7 +670,6 @@
   <string name="background">पृष्ठभूमि</string>
   <string name="light">प्रकाश</string>
   <string name="dark">गाढा</string>
-  <string name="transparent">पारदर्शि</string>
   <string name="backgroundImageUrl">पृष्ठभूमि प्रतिमा URL:</string>
   <string name="pieceSet">चेस सेट</string>
   <string name="embedInYourWebsite">तपाइको वेबसाइटमा इम्बेड गर्नुहोस्</string>
@@ -765,7 +758,6 @@
   <string name="agreementAssistance">म आफ्नो खेलको क्रममा कहिल्यै पनि कुनै पनि बाहिरी सहायता (कम्प्युटर, डाटाबेस, वा अर्को व्यक्तिसँग) नलिन सहमत छु।</string>
   <string name="agreementNice">म सबै खेलाडीसँग राम्रो व्यवहार गर्न सहमत छु।</string>
   <string name="agreementMultipleAccounts" comment="%s will be replaced with the translation of 'termsOfService'">म स्विकार्छु कि म (%s मा उल्लिखित कारणहरूले गर्दा बाहेक) एक भन्दा बढी खाता बनाउँने छैन । </string>
-  <string name="agreementPolicy">म लीचेसका सबै नीति पालना गर्न सहमत छु।</string>
   <string name="searchOrStartNewDiscussion">नयाँ छलफल शुरू गर्नुहोस्।</string>
   <string name="edit">परिमार्जन</string>
   <string name="bullet" comment="Probably best left untranslated. Leave it as 'Bullet' unless your language has a better word for it.">तोप</string>

@@ -1,6 +1,9 @@
-import * as xhr from '@/xhr';
 import debounce from 'debounce-promise';
+
+import * as xhr from '@/xhr';
+
 import { complete } from './complete';
+import { profileUrl } from './userLink';
 
 export interface UserCompleteResult {
   result: LightUserOnline[];
@@ -34,14 +37,18 @@ export function userComplete(opts: UserCompleteOpts): void {
 }
 
 type ResultOfTerm = { term: string } & UserCompleteResult;
-export const fetchUsers = async (term: string, opts: Partial<UserCompleteOpts>): Promise<ResultOfTerm> => {
+
+export const fetchUsers = async (
+  term: string,
+  { friend, tour, swiss, team }: Partial<UserCompleteOpts>,
+): Promise<ResultOfTerm> => {
   const result = await xhr.json(
     xhr.url('/api/player/autocomplete', {
       term,
-      friend: opts.friend ? 1 : 0,
-      tour: opts.tour,
-      swiss: opts.swiss,
-      team: opts.team,
+      friend: friend ? 1 : 0,
+      tour,
+      swiss,
+      team,
       object: 1,
     }),
   );
@@ -51,37 +58,16 @@ export const fetchUsers = async (term: string, opts: Partial<UserCompleteOpts>):
 export const checkDebouncedResultAgainstTerm =
   (term: string) =>
   (got: ResultOfTerm): Promise<LightUserOnline[]> =>
-    term === got.term ? Promise.resolve(got.result) : Promise.reject('Debounced ' + term);
+    term === got.term ? Promise.resolve(got.result) : Promise.reject(new Error('Debounced ' + term));
 
-export const renderUserEntry = (o: LightUserOnline, tag: string = 'a'): string => {
+export const renderUserEntry = (o: LightUserOnline, tag = 'a'): string => {
   const patronClass = o.patronColor ? ` paco${o.patronColor}` : '';
+  const hrefAttr = tag === 'a' ? 'href' : 'data-href';
+  const title = o.title
+    ? `<span class="utitle"${o.title === 'BOT' ? ' data-bot="data-bot"' : ''}>${o.title}</span>&nbsp;`
+    : '';
+  const flair = o.flair ? `<img class="uflair" src="${site.asset.flairSrc(o.flair)}" alt="" />` : '';
   const playingClass = o.playing ? ' playing' : '';
-  return (
-    '<' +
-    tag +
-    ' class="complete-result ulpt user-link' +
-    (o.online ? ' online' : '') +
-    playingClass +
-    '" ' +
-    (tag === 'a' ? '' : 'data-') +
-    'href="/@/' +
-    o.name +
-    '">' +
-    '<i class="line' +
-    (o.patron ? ' patron' : '') +
-    patronClass +
-    '"></i>' +
-    (o.title
-      ? '<span class="utitle"' +
-        (o.title === 'BOT' ? ' data-bot="data-bot" ' : '') +
-        '>' +
-        o.title +
-        '</span>&nbsp;'
-      : '') +
-    o.name +
-    (o.flair ? '<img class="uflair" src="' + site.asset.flairSrc(o.flair) + '"/>' : '') +
-    '</' +
-    tag +
-    '>'
-  );
+  const onlineClass = o.online ? ' online' : '';
+  return `<${tag} class="complete-result ulpt user-link${onlineClass}${playingClass}" ${hrefAttr}="${profileUrl(o.name)}"><icon class="line${o.patron ? ' patron' : ''}${patronClass}"></icon>${title}${o.name}${flair}</${tag}>`;
 };

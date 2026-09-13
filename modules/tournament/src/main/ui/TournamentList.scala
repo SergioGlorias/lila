@@ -35,18 +35,6 @@ final class TournamentList(helpers: Helpers, ui: TournamentUi)(
       ):
         main(cls := "tour-home")(
           st.aside(cls := "tour-home__side")(
-            h2(
-              a(href := routes.Tournament.leaderboard)(trans.site.leaderboard())
-            ),
-            ul(cls := "leaderboard")(
-              winners.top.map: w =>
-                li(
-                  userIdLink(w.userId.some),
-                  a(title := w.tourName, href := routes.Tournament.show(w.tourId))(
-                    ui.scheduledTournamentNameShortHtml(w.tourName)
-                  )
-                )
-            ),
             p(cls := "tour__links")(
               ctx.me.map: me =>
                 frag(
@@ -60,8 +48,20 @@ final class TournamentList(helpers: Helpers, ui: TournamentUi)(
               a(href := routes.Tournament.help)(trans.site.tournamentFAQ()),
               br,
               a(href := routes.Cms.lonePage(lila.core.id.CmsPageKey("leagues-and-battles")))(
-                "Leagues & Streamer Battles"
+                trans.arena.leaguesAndStreamerBattles()
               )
+            ),
+            h2(
+              a(href := routes.Tournament.leaderboard)(trans.site.leaderboard())
+            ),
+            ul(cls := "leaderboard")(
+              winners.top.map: w =>
+                li(
+                  userIdLink(w.userId.some),
+                  a(title := w.tourName, href := routes.Tournament.show(w.tourId))(
+                    ui.scheduledTournamentNameShortHtml(w.tourName)
+                  )
+                )
             ),
             h2(trans.site.lichessTournaments()),
             div(cls := "scheduled")(
@@ -73,7 +73,8 @@ final class TournamentList(helpers: Helpers, ui: TournamentUi)(
                       strong(tour.name(full = false)),
                       momentFromNow(tour.startsAt)
                     )
-            )
+            ),
+            a(cls := "button button-empty", href := routes.Tournament.calendar)(trans.site.more(), " »")
           ),
           st.section(cls := "tour-home__schedule box")(
             boxTop(
@@ -320,7 +321,7 @@ final class TournamentList(helpers: Helpers, ui: TournamentUi)(
 
     def byCateg(categ: TournamentShield.Category, awards: List[TournamentShield.Award])(using Context) =
       Page("Tournament shields")
-        .css("tournament.leaderboard", "slist"):
+        .css("tournament.leaderboard"):
           main(cls := "page-menu page-small tournament-categ-shields")(
             shieldMenu,
             div(cls := "page-menu__content box")(

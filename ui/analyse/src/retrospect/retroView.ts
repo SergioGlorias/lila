@@ -1,29 +1,28 @@
+import { licon } from 'lib/licon';
+import type { TreeNode } from 'lib/tree/types';
+import { bind, hl, type VNode, spinnerVdom as spinner, icon } from 'lib/view';
+
+import type AnalyseCtrl from '../ctrl';
 import { renderIndexAndMove } from '../view/components';
 import type { RetroCtrl } from './retroCtrl';
-import type AnalyseCtrl from '../ctrl';
-import * as licon from 'lib/licon';
-import { bind, dataIcon, hl, type VNode, spinnerVdom as spinner } from 'lib/view';
-import type { TreeNode } from 'lib/tree/types';
 
-function skipOrViewSolution(ctrl: RetroCtrl) {
-  return hl('div.choices', [
+const skipOrViewSolution = (ctrl: RetroCtrl): VNode =>
+  hl('div.choices', [
     hl('a', { hook: bind('click', ctrl.viewSolution, ctrl.redraw) }, i18n.site.viewTheSolution),
     hl('a', { hook: bind('click', ctrl.skip) }, i18n.site.skipThisMove),
   ]);
-}
 
-function jumpToNext(ctrl: RetroCtrl) {
-  return hl('a.half.continue', { hook: bind('click', ctrl.jumpToNext) }, [
-    hl('i', { attrs: dataIcon(licon.PlayTriangle) }),
+const jumpToNext = (ctrl: RetroCtrl): VNode =>
+  hl('a.half.continue', { hook: bind('click', ctrl.jumpToNext) }, [
+    icon(licon.PlayTriangle)(),
     i18n.site.next,
   ]);
-}
 
 const minDepth = 8;
 const maxDepth = 18;
 
-function renderEvalProgress(node: TreeNode): VNode {
-  return hl(
+const renderEvalProgress = (node: TreeNode): VNode =>
+  hl(
     'div.progress',
     hl('div', {
       attrs: {
@@ -33,7 +32,6 @@ function renderEvalProgress(node: TreeNode): VNode {
       },
     }),
   );
-}
 
 const feedback = {
   find(ctrl: RetroCtrl): VNode[] {
@@ -112,12 +110,13 @@ const feedback = {
     return [
       hl(
         'div.half.top',
-        hl('div.player.center', [
+        hl(
+          'div.player.center',
           hl('div.instruction', [
             hl('strong', i18n.site.evaluatingYourMove),
             renderEvalProgress(ctrl.node()),
           ]),
-        ]),
+        ),
       ),
     ];
   },
@@ -181,7 +180,7 @@ function renderFeedback(root: AnalyseCtrl, fb: Exclude<keyof typeof feedback, 'e
 
 export default function (root: AnalyseCtrl): VNode | undefined {
   const ctrl = root.retro;
-  if (!ctrl) return;
+  if (!ctrl) return undefined;
   const fb = ctrl.feedback(),
     completion = ctrl.completion();
   return hl('div.retro-box.training-box.sub-box', [

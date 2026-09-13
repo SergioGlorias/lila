@@ -119,7 +119,6 @@
   <string name="enable">Iespējot</string>
   <string name="bestMoveArrow">Labākā gājiena bulta</string>
   <string name="showVariationArrows">Rādīt varianta bultiņas</string>
-  <string name="evaluationGauge">Novērtējuma rādītājs</string>
   <string name="multipleLines">Vairāki varianti</string>
   <string name="cpus">Procesori</string>
   <string name="memory">Atmiņa</string>
@@ -236,7 +235,6 @@
   <string name="changeUsernameNotSame">Drīkst mainīt tikai burtu lielumu. Piemēram \"jānisbērziņš\" var mainīt uz \"JānisBērziņš\".</string>
   <string name="changeUsernameDescription">Mainīt lietotājvārdu. To var izdarīt tikai vienreiz, un ir atļauts mainīt tikai lielo burtu lietojumu lietotājvārdā.</string>
   <string name="signupUsernameHint">Atcerieties izvēlēties pieklājīgu lietotājvārdu. To nav iespējams mainīt, un konti ar nepiedienīgiem lietotājvārdiem tiks slēgti!</string>
-  <string name="signupEmailHint">Mēs to izmantosim tikai paroles atiestatīšanai.</string>
   <string name="password">Parole</string>
   <string name="changePassword">Mainīt paroli</string>
   <string name="changeEmail">Mainīt e-pasta adresi</string>
@@ -260,9 +258,6 @@
   <string name="emailCanTakeSomeTime">Iespējams, paies kāds laiks, līdz to saņemsiet.</string>
   <string name="refreshInboxAfterFiveMinutes">Pagaidiet 5 minūtes, un atsvaidziniet savu epasta iesūtni.</string>
   <string name="checkSpamFolder">Pārbaudiet arī mēstuļu nodalījumu – iespējams, mūsu ziņa tur nonākusi. Tādā gadījumā, lūdzu atzīmējiet, ka tā nav mēstule.</string>
-  <string name="emailForSignupHelp">Ja nekas cits neizdodas, nosūtiet mums šo epastu:</string>
-  <string name="copyTextToEmail">Kopējiet augšup esošo tekstu un sūtiet to %s</string>
-  <string name="waitForSignupHelp">Drīz mēs jums pievērsīsimies un palīdzēsim pabeigt reģistrāciju.</string>
   <string name="accountConfirmed">Lietotājs %s ir veiksmīgi apstiprināts.</string>
   <string name="accountCanLogin">Tagad varat ierakstīties kā %s.</string>
   <string name="accountConfirmationEmailNotNeeded">Jums nav nepieciešams apstiprinājuma epasts.</string>
@@ -432,7 +427,6 @@
   <string name="apply">Apstiprināt</string>
   <string name="save">Saglabāt</string>
   <string name="leaderboard">Labāko spēlētāju saraksts</string>
-  <string name="screenshotCurrentPosition">Uzņemt pašreizējās pozīcijas attēlu</string>
   <string name="gameAsGIF">Spēle GIF formātā</string>
   <string name="pasteTheFenStringHere">Ielīmējiet FEN tekstu šeit</string>
   <string name="pasteThePgnStringHere">Ielīmējiet PGN tekstu šeit</string>
@@ -543,7 +537,6 @@
   <string name="oneUrlPerLine">Katrā rindā vienu URL.</string>
   <string name="inlineNotation">Iekļautā notācija</string>
   <string name="makeAStudy">Lai saglabātu un dalītos, varat izveidot izpēti.</string>
-  <string name="clearSavedMoves">Dzēst gājienus</string>
   <string name="previouslyOnLichessTV">Iepriekš pārraidīts Lichess TV</string>
   <string name="onlinePlayers">Spēlētāji tiešsaistē</string>
   <string name="activePlayers">Aktīvākie spēlētāji</string>
@@ -724,11 +717,6 @@
   <string name="keyGoToStartOrEnd">iet uz sākumu/beigām</string>
   <string name="keyShowOrHideComments">slēpt/rādīt komentārus</string>
   <string name="keyEnterOrExitVariation">ieiet/iziet variācijā</string>
-  <string name="keyRequestComputerAnalysis">Pieprasi datora analīzi, Mācies no savām kļūdām</string>
-  <string name="keyNextLearnFromYourMistakes">Nākamais (Mācies no savām kļūdām)</string>
-  <string name="keyNextBlunder">Nākamā rupjā kļūda</string>
-  <string name="keyNextMistake">Nākamā kļūda</string>
-  <string name="keyNextInaccuracy">Nākamā neprecizitāte</string>
   <string name="keyPreviousBranch">Iepriekšējais zars</string>
   <string name="keyNextBranch">Nākamais zars</string>
   <string name="toggleVariationArrows">Rādīt/slēpt varianta bultiņas</string>
@@ -807,7 +795,6 @@
   <string name="background">Fons</string>
   <string name="light">Gaišs</string>
   <string name="dark">Tumšs</string>
-  <string name="transparent">Caurspīdīgs</string>
   <string name="deviceTheme">Saskaņot ar sistēmu</string>
   <string name="backgroundImageUrl">Fona attēla URL:</string>
   <string name="board">Galdiņš</string>
@@ -910,7 +897,6 @@
   <string name="agreementAssistance">Piekrītu spēlējot nevienā brīdī nesaņemt palīdzību (no šaha programmas, grāmatas, datubāzes vai cita cilvēka).</string>
   <string name="agreementNice">Piekrītu vienmēr izturēties pieklājīgi pret citiem spēlētājiem.</string>
   <string name="agreementMultipleAccounts" comment="%s will be replaced with the translation of 'termsOfService'">Piekrītu neizveidot vairākus kontus (izņemot gadījumos, kad to attaisno %s).</string>
-  <string name="agreementPolicy">Piekrītu ievērot visus Lichess noteikumus.</string>
   <string name="searchOrStartNewDiscussion">Meklēt vai uzsākt sarunu</string>
   <string name="edit">Rediģēt</string>
   <string name="bullet" comment="Probably best left untranslated. Leave it as 'Bullet' unless your language has a better word for it.">Bullet</string>
@@ -945,7 +931,6 @@
   <string name="xInvitedYouToY">%1$s jūs uzaicināja uz \"%2$s\".</string>
   <string name="youAreNowPartOfTeam">Tagad esat komandas dalībnieks.</string>
   <string name="youHaveJoinedTeamX">Pievienojāties \"%1$s\".</string>
-  <string name="someoneYouReportedWasBanned">Lietotājam, ko nosūdzējāt, tika slēgts konts</string>
   <string name="congratsYouWon">Apsveicam ar uzvaru!</string>
   <string name="gameVsX">Spēle pret %1$s</string>
   <string name="resVsX">%1$s pret %2$s</string>
@@ -998,7 +983,6 @@ Atstājiet tukšu, lai spēles sāktos no parastās pozīcijas.</string>
   <string name="gameInProgress">Jums ir nepageigta spēle ar %s.</string>
   <string name="abortTheGame">Atcelt spēli</string>
   <string name="resignTheGame">Padoties</string>
-  <string name="youCantStartNewGame">Kamēr neesat pabeidzis šo spēli, nevarat sākt jaunu partiju.</string>
   <string name="since">Kopš</string>
   <string name="until">Līdz</string>
   <string name="lichessDbExplanation">Vērtērtu spēļu paraugi no visiem Lichess spēlētājiem</string>

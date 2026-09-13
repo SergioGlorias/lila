@@ -11,7 +11,7 @@ final private class InsightIndexer(
     povToEntry: PovToEntry,
     gameRepo: GameRepo,
     storage: InsightStorage
-)(using Executor, Scheduler, akka.stream.Materializer):
+)(using Executor, Scheduler, org.apache.pekko.stream.Materializer):
 
   import gameRepo.gameHandler
 
@@ -19,7 +19,7 @@ final private class InsightIndexer(
     maxSize = Max(256),
     timeout = 1.minute,
     name = "insightIndexer",
-    lila.log.asyncActorMonitor.full
+    lila.mon.asyncActorMonitor.full
   )
 
   def all(user: User, force: Boolean): Funit =
@@ -82,13 +82,13 @@ final private class InsightIndexer(
             .addFailureEffect: e =>
               logger.warn(e.getMessage, e)
             .map(_.toOption)
-        val query = gameQuery(user) ++ $doc(lila.game.Game.BSONFields.createdAt.$gte(from))
+        val query = gameQuery(user) ++ bdoc(lila.game.Game.BSONFields.createdAt.gte(from))
         gameRepo
           .sortedCursor(query, Query.sortChronological)
           .documentSource(maxGames.value)
-          .mapAsync(16)(toEntry)
+          .mapAsync(8)(toEntry)
           .via(LilaStream.collect)
           .grouped(100.atMost(maxGames.value))
-          .map(storage.bulkInsert)
+          .mapAsync(1)(storage.bulkInsert)
           .run()
           .void
