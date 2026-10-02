@@ -78,8 +78,7 @@ export function endgameShapes(
   winner: Color | undefined,
   status: StatusName | undefined,
 ): DrawShape[] {
-  const noEndgameGlyph = $('body').hasClass('no-resultsGlyphs');
-  if (noEndgameGlyph || status === 'aborted' || status === 'noStart') return [];
+  if (status === 'aborted' || status === 'noStart') return [];
 
   const shapes: DrawShape[] = [];
   const add = (color: Color, glyph: EndgameGlyph) => {

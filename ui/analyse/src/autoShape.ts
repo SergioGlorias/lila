@@ -127,8 +127,9 @@ export function compute(ctrl: AnalyseCtrl): DrawShape[] {
   const node = ctrl.node;
   const isLastMainline = node === last(ctrl.mainline);
   const isTerminalVariation = node.children.length === 0 && node.dests().size === 0;
+  const noEndgameGlyph = $('body').hasClass('no-resultsGlyphs');
 
-  if (isLastMainline || isTerminalVariation) {
+  if ((isLastMainline || isTerminalVariation) && !noEndgameGlyph) {
     const [winner, status] = ctrl.study
       ? tagsResult(ctrl.study.data.chapter.tags)
       : [ctrl.data.game.winner, ctrl.data.game.status.name];
