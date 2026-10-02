@@ -14,6 +14,7 @@ import { last } from 'lib/tree/ops';
 import type { ServerEval, TreeNode } from 'lib/tree/types';
 
 import type AnalyseCtrl from './ctrl';
+import { tagsResult } from './study/studyTags';
 
 const pieceDrop = (key: Key, role: Role, color: Color): DrawShape => ({
   orig: key,
@@ -121,12 +122,18 @@ export function compute(ctrl: AnalyseCtrl): DrawShape[] {
     hovering = ctrl.ceval.hovering();
   }
 
-  let shapes: DrawShape[] = endgameShapesForNode(
-    ctrl.node,
-    ctrl.node === last(ctrl.mainline),
-    ctrl.data.game.winner,
-    ctrl.data.game.status.name,
-  );
+  let shapes: DrawShape[] = [];
+
+  const node = ctrl.node;
+  const isLastMainline = node === last(ctrl.mainline);
+  const isTerminalVariation = node.children.length === 0 && node.dests().size === 0;
+
+  if (isLastMainline || isTerminalVariation) {
+    const [winner, status] = ctrl.study
+      ? tagsResult(ctrl.study.data.chapter.tags)
+      : [ctrl.data.game.winner, ctrl.data.game.status.name];
+    shapes.push(...endgameShapesForNode(node, winner, status));
+  }
   let badNode: TreeNode | undefined;
   if ((badNode = ctrl.retro?.showBadNode()) && badNode.uci) {
     return makeShapesFromUci(color, badNode.uci, 'paleRed', { lineWidth: 8 });
@@ -181,7 +188,7 @@ export function compute(ctrl: AnalyseCtrl): DrawShape[] {
     const liveGlyph = ctrl.liveAnnotate?.get(ctrl.path);
     if (liveGlyph && ctrl.settings.showLiveAnnotations && !glyphs.some(g => g.id <= 6))
       glyphs.push(liveGlyph);
-    shapes = shapes.concat(annotationShapes({ ...ctrl.node, glyphs }));
+    shapes = shapes.concat(annotationShapes({ ...ctrl.node, glyphs }, shapes));
   }
   if (ctrl.showVariationArrows()) hiliteVariations(ctrl, shapes);
 
